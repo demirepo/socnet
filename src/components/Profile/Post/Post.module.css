@@ -1,0 +1,24 @@
+.post {
+  display: flex;
+  justify-content: space-between;
+  width: auto;
+  background-color: #fff;
+  border: 1px solid black;
+  margin: 10px 10px;
+  padding: 10px;
+  color: #000;
+}
+
+.image {
+  flex-basis: 50px;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  background-image: url(https://i.ytimg.com/vi/8gt4g4DDyYg/maxresdefault.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.message {
+  flex-grow: 1;
+}
