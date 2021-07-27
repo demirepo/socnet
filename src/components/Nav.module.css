@@ -1,0 +1,14 @@
+.navbar {
+  grid-area: n;
+  background-color: green;
+}
+
+.navbar__item {
+  list-style: none;
+}
+
+.navbar__link {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}

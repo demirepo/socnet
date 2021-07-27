@@ -1,0 +1,16 @@
+.content {
+  grid-area: c;
+  background-color: gray;
+  color: antiquewhite;
+}
+
+.bigpic {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 240px;
+  height: 200px;
+}
