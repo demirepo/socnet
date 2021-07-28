@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  color: #000;
+}
+
+.dialogs,
+.messages {
+  /* background-color: firebrick; */
+  width: calc(50%);
+  margin: 10px 10px;
+  list-style: none;
+}
+
+.messages {
+  text-align: center;
+  margin-left: 0;
+}
+
+.dialogsItem {
+  text-decoration: none;
+  color: #000;
+}

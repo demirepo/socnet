@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import s from "./Nav.module.css";
 
 export default function Nav() {
@@ -6,29 +7,29 @@ export default function Nav() {
     <nav className={s.navbar}>
       <ul>
         <li className={s.navbar__item}>
-          <a className={s.navbar__link} href="http://oper.ru">
+          <NavLink className={s.navbar__link} to="/profile">
             Profile
-          </a>
+          </NavLink>
         </li>
         <li className={s.navbar__item}>
-          <a className={s.navbar__link} href="http://oper.ru">
+          <NavLink className={s.navbar__link} to="/dialogs">
             Messages
-          </a>
+          </NavLink>
         </li>
         <li className={s.navbar__item}>
-          <a className={s.navbar__link} href="http://oper.ru">
+          <NavLink className={s.navbar__link} to="news">
             News
-          </a>
+          </NavLink>
         </li>
         <li className={s.navbar__item}>
-          <a className={s.navbar__link} href="http://oper.ru">
+          <NavLink className={s.navbar__link} to="music">
             Music
-          </a>
+          </NavLink>
         </li>
         <li className={s.navbar__item}>
-          <a className={s.navbar__link} href="http://oper.ru">
+          <NavLink className={s.navbar__link} to="settings">
             Settings
-          </a>
+          </NavLink>
         </li>
       </ul>
     </nav>
