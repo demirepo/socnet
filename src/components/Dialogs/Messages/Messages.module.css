@@ -1,0 +1,18 @@
+.messagesItem {
+  width: auto;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  color: #000;
+  border-radius: 10px;
+}
+
+.flexRight {
+  align-self: flex-start;
+  background-color: #c3c4;
+}
+
+.flexLeft {
+  background-color: greenyellow;
+  align-self: flex-end;
+}

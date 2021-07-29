@@ -16,19 +16,22 @@ export default function App(props) {
       <Header />
       <Nav />
       <div className="wrapper-content">
-        {/* <Route
+        <Route
           path="/profile"
-          component={() => <Profile data={props.data} />}
+          render={() => <Profile data={props.data.profilePage} />}
         />
         <Route
           path="/dialogs"
-          component={() => <Dialogs data={props.data} />}
-        /> */}
-        <Route path="/profile" render={() => <Profile data={props.data} />} />
-        <Route path="/dialogs" render={() => <Dialogs data={props.data} />} />
+          render={() => <Dialogs data={props.data.messagesPage} />}
+        />
         <Route path="/news" component={News} />
         <Route path="/music" component={Music} />
         <Route path="/settings" component={Settings} />
+        <Route
+          exact
+          path="/"
+          render={() => <Profile data={props.data.profilePage} />}
+        />
       </div>
     </div>
   );

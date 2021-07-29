@@ -1,5 +1,5 @@
-import s from "./../Dialogs.module.css";
-
-export default function Message(props) {
-  return <div className={s.messagesItem}>{props.text}</div>;
+import s from "./Messages.module.css";
+export default function Messages(props) {
+  const side = props.side;
+  return <div className={s.messagesItem + " " + s[side]}>{props.text}</div>;
 }

@@ -13,21 +13,21 @@ export default function Nav() {
         </li>
         <li className={s.navbar__item}>
           <NavLink className={s.navbar__link} to="/dialogs">
-            Messages
+            Dialogs
           </NavLink>
         </li>
         <li className={s.navbar__item}>
-          <NavLink className={s.navbar__link} to="news">
+          <NavLink className={s.navbar__link} to="/news">
             News
           </NavLink>
         </li>
         <li className={s.navbar__item}>
-          <NavLink className={s.navbar__link} to="music">
+          <NavLink className={s.navbar__link} to="/music">
             Music
           </NavLink>
         </li>
         <li className={s.navbar__item}>
-          <NavLink className={s.navbar__link} to="settings">
+          <NavLink className={s.navbar__link} to="/settings">
             Settings
           </NavLink>
         </li>

@@ -1,23 +1,60 @@
 .container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   color: #000;
+}
+
+.dialogs {
+  flex-basis: 30%;
+  padding: 0;
 }
 
 .dialogs,
 .messages {
-  /* background-color: firebrick; */
   width: calc(50%);
   margin: 10px 10px;
   list-style: none;
+  min-height: 70vh;
+  background-color: #fff;
 }
 
 .messages {
   text-align: center;
   margin-left: 0;
+  display: flex;
+  flex-grow: 1;
+  flex-flow: column;
+}
+
+/* .messagesItem {
+  width: auto;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  color: #000;
+  background-color: #c3c4;
+  border-radius: 10px;
 }
 
 .dialogsItem {
-  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 90%;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid black;
+  text-align: center;
   color: #000;
+  font-size: 1.5em;
 }
+
+a {
+  text-decoration: none;
+}
+
+.dialogsItemImg {
+  width: 30px;
+  height: 30px;
+} */

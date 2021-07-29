@@ -1,20 +1,27 @@
 import DialogItem from "./DialogItem/DialogItem";
-import s from "./Dialogs.module.css";
 import Message from "./Messages/Messages";
+
+import s from "./Dialogs.module.css";
 
 export default function Dialogs(props) {
   let dialogItemsList = props.data.dialogs.map((dialog) => (
-    <DialogItem key={dialog.id} id={dialog.id} name={dialog.name} />
+    <DialogItem
+      key={dialog.id}
+      id={dialog.id}
+      name={dialog.name}
+      path={dialog.avatarPath}
+    />
   ));
 
-  let messageList = props.data.messages.map((message) => (
-    <Message key={message.id} text={message.text} />
-  ));
+  let messageList1 = props.data.dialogHistory.userId1.map((message) => {
+    const side = message.author === "me" ? "flexLeft" : "flexRight";
+    return <Message key={message.id} side={side} text={message.text} />;
+  });
 
   return (
     <div className={s.container}>
       <ul className={s.dialogs}>{dialogItemsList}</ul>
-      <div className={s.messages}>{messageList}</div>
+      <div className={s.messages}>{messageList1}</div>
     </div>
   );
 }

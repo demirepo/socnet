@@ -3,31 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-
-const posts = [
-  { id: 1, text: "какой-то текст поста №1", likes: 10 },
-  { id: 2, text: "какой-то текст поста №2", likes: 44 },
-  { id: 3, text: "какой-то текст поста №3", likes: 5 },
-];
-
-const dialogs = [
-  { id: 1, name: "Sergei" },
-  { id: 2, name: "Anton" },
-  { id: 3, name: "Evgen" },
-];
-
-const messages = [
-  { id: 1, text: "Превед" },
-  { id: 2, text: "Каг дела?" },
-  { id: 3, text: "Ой все!" },
-];
-
-const dataObj = { posts, dialogs, messages };
+import { state } from "./components/State/state";
 
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
-      <App data={dataObj} />
+      <App data={state} />
     </React.StrictMode>
   </BrowserRouter>,
   document.getElementById("root")
