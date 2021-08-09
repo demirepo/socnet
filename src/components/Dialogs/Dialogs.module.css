@@ -14,7 +14,7 @@
   width: calc(50%);
   margin: 10px 10px;
   list-style: none;
-  min-height: 70vh;
+  min-height: 65vh;
   background-color: #fff;
 }
 
@@ -58,3 +58,15 @@ a {
   width: 30px;
   height: 30px;
 } */
+
+.textArea {
+  width: calc(100% - 20px);
+  margin: 0 0 10px 10px;
+  display: block;
+  white-space: normal;
+}
+
+.button {
+  float: right;
+  margin: 0 10px 10px;
+}

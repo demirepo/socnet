@@ -2,9 +2,9 @@ import React from "react";
 
 import MyPosts from "./MyPosts/MyPosts";
 import UserInfo from "./UserInfo/UserInfo";
+import NewPost from "./NewPost/NewPost";
 
 import s from "./Profile.module.css";
-import NewPost from "./NewPost/NewPost";
 
 export default function Profile(props) {
   return (
@@ -15,7 +15,11 @@ export default function Profile(props) {
         alt="bigpic"
       />
       <UserInfo />
-      <NewPost />
+      <NewPost
+        inputState={props.data.input}
+        addPost={props.addPost}
+        updateState={props.updateState}
+      />
       <MyPosts data={props.data} />
     </section>
   );

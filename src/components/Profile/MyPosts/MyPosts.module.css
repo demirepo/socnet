@@ -1,5 +1,5 @@
 .newPost textarea {
-  width: calc(100%);
+  max-width: calc(100%);
   /* margin: 10px 10px 10px 10px; */
   box-sizing: border-box;
 }
