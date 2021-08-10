@@ -1,15 +1,20 @@
 import React from "react";
+import {
+  addPostActionCreator,
+  updateProfileStateActionCreator,
+} from "./../../../Redux/state";
+
 import s from "./NewPost.module.css";
 
 export default function NewPost(props) {
   const textArea = React.createRef();
 
   const updateState = () => {
-    let input = textArea.current.value;
-    props.dispatch({ type: "updateState", input: input });
+    let text = textArea.current.value;
+    props.dispatch(updateProfileStateActionCreator(text));
   };
 
-  const addPost = () => props.dispatch({ type: "addPost" });
+  const addPost = () => props.dispatch(addPostActionCreator());
 
   return (
     <div className={s.newPost}>

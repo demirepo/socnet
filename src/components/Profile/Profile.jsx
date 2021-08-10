@@ -15,7 +15,10 @@ export default function Profile(props) {
         alt="bigpic"
       />
       <UserInfo />
-      <NewPost inputState={props.data.input} dispatch={props.dispatch} />
+      <NewPost
+        inputState={props.data.profileInputText}
+        dispatch={props.dispatch}
+      />
       <MyPosts data={props.data} />
     </section>
   );
