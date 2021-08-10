@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
-import store from "./Redux/state";
+import store from "./redux/state";
 
 export function renderAll(state) {
   ReactDOM.render(

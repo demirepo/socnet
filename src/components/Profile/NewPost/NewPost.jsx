@@ -2,15 +2,13 @@ import React from "react";
 import {
   addPostActionCreator,
   updateProfileStateActionCreator,
-} from "./../../../Redux/state";
+} from "../../../redux/profileReducer";
 
 import s from "./NewPost.module.css";
 
 export default function NewPost(props) {
-  const textArea = React.createRef();
-
-  const updateState = () => {
-    let text = textArea.current.value;
+  const updateState = (e) => {
+    let text = e.target.value;
     props.dispatch(updateProfileStateActionCreator(text));
   };
 
@@ -26,7 +24,6 @@ export default function NewPost(props) {
             rows="10"
             value={props.inputState}
             onChange={updateState}
-            ref={textArea}
           ></textarea>
           <button onClick={addPost}>Добавить новый пост</button>
         </fieldset>

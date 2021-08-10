@@ -6,7 +6,7 @@ import s from "./Dialogs.module.css";
 import {
   updateDialogStateActionCreator,
   postMessageActionCreator,
-} from "../../Redux/state";
+} from "../../redux/dialogReducer";
 
 export default function Dialogs(props) {
   const dialogItemsList = props.data.dialogs.map((d) => (
@@ -18,15 +18,12 @@ export default function Dialogs(props) {
     return <Message key={m.id} side={sideClass} text={m.text} />;
   });
 
-  const textArea = React.createRef();
-
   const postTextArea = () => {
-    let text = textArea.current.value;
-    props.dispatch(postMessageActionCreator(text));
+    props.dispatch(postMessageActionCreator());
   };
 
-  const updateState = () => {
-    let text = textArea.current.value;
+  const updateState = (e) => {
+    let text = e.target.value;
     props.dispatch(updateDialogStateActionCreator(text));
   };
 
@@ -38,8 +35,8 @@ export default function Dialogs(props) {
       </div>
       <div>
         <textarea
+          placeholder="Введите текст сообщения..."
           className={s.textArea}
-          ref={textArea}
           rows="8"
           value={props.data.dialogInputText}
           onChange={updateState}
