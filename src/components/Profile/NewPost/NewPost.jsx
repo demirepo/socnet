@@ -6,8 +6,10 @@ export default function NewPost(props) {
 
   const updateState = () => {
     let input = textArea.current.value;
-    props.updateState(input);
+    props.dispatch({ type: "updateState", input: input });
   };
+
+  const addPost = () => props.dispatch({ type: "addPost" });
 
   return (
     <div className={s.newPost}>
@@ -21,7 +23,7 @@ export default function NewPost(props) {
             onChange={updateState}
             ref={textArea}
           ></textarea>
-          <button onClick={props.addPost}>Добавить новый пост</button>
+          <button onClick={addPost}>Добавить новый пост</button>
         </fieldset>
       </div>
     </div>

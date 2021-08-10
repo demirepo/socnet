@@ -20,21 +20,25 @@ export default function App(props) {
           <Route
             path="/profile"
             render={() => (
-              <Profile // аттрибуты нужно менять также и для пути /
-                addPost={props.addPost}
+              <Profile
                 data={props.data.profilePage}
-                updateState={props.updateState}
+                dispatch={props.dispatch}
               />
             )}
           />
           <Route
             path="/dialogs"
-            render={() => <Dialogs data={props.data.messagesPage} />}
+            render={() => (
+              <Dialogs
+                data={props.data.messagesPage}
+                dispatch={props.dispatch}
+              />
+            )}
           />
           <Route path="/news" component={News} />
           <Route path="/music" component={Music} />
           <Route path="/settings" component={Settings} />
-          <Route
+          {/* <Route
             exact
             path="/"
             render={() => (
@@ -44,7 +48,7 @@ export default function App(props) {
                 updateState={props.updateState}
               />
             )}
-          />
+          /> */}
         </div>
       </div>
     </BrowserRouter>
