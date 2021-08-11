@@ -1,15 +1,19 @@
 export const UPDATE_PROFILE_STATE = "updateProfileState";
 export const ADD_POST = "addPost";
 
-export function updateProfileStateActionCreator(text) {
-  return { type: UPDATE_PROFILE_STATE, profileInputText: text };
-}
+//===================== INITIAL STATE ============================
 
-export function addPostActionCreator() {
-  return { type: ADD_POST };
-}
+const initialState = {
+  posts: [
+    { id: 1, text: "какой-то текст поста №1", likes: 10 },
+    { id: 2, text: "какой-то текст поста №2", likes: 44 },
+    { id: 3, text: "какой-то текст поста №3", likes: 5 },
+  ],
+  profileInputText: "",
+};
+//===================== REDUCER ============================
 
-export default function profileReducer(state, action) {
+export default function profileReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_POST:
       const posts = state.posts;
@@ -31,4 +35,14 @@ export default function profileReducer(state, action) {
       break;
   }
   return state;
+}
+
+//===================== ACTION CREATORS ============================
+
+export function updateProfileStateActionCreator(text) {
+  return { type: UPDATE_PROFILE_STATE, profileInputText: text };
+}
+
+export function addPostActionCreator() {
+  return { type: ADD_POST };
 }

@@ -9,11 +9,11 @@ import {
 } from "../../redux/dialogReducer";
 
 export default function Dialogs(props) {
-  const dialogItemsList = props.data.dialogs.map((d) => (
+  const dialogItemsList = props.state.dialogs.map((d) => (
     <DialogItem key={d.id} id={d.id} name={d.name} path={d.avatarPath} />
   ));
 
-  const messageList = props.data.dialogHistory.userId1.map((m) => {
+  const messageList = props.state.dialogHistory.userId1.map((m) => {
     const sideClass = m.author === "me" ? "flexLeft" : "flexRight";
     return <Message key={m.id} side={sideClass} text={m.text} />;
   });
@@ -38,7 +38,7 @@ export default function Dialogs(props) {
           placeholder="Введите текст сообщения..."
           className={s.textArea}
           rows="8"
-          value={props.data.dialogInputText}
+          value={props.state.dialogInputText}
           onChange={updateState}
         ></textarea>
         <input

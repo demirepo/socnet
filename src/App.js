@@ -21,7 +21,7 @@ export default function App(props) {
             path="/profile"
             render={() => (
               <Profile
-                data={props.data.profilePage}
+                state={props.state.profilePage}
                 dispatch={props.dispatch}
               />
             )}
@@ -30,7 +30,7 @@ export default function App(props) {
             path="/dialogs"
             render={() => (
               <Dialogs
-                data={props.data.messagesPage}
+                state={props.state.messagesPage}
                 dispatch={props.dispatch}
               />
             )}
