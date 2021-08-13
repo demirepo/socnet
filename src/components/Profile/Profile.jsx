@@ -16,10 +16,11 @@ export default function Profile(props) {
       />
       <UserInfo />
       <NewPost
-        inputState={props.state.profileInputText}
-        dispatch={props.dispatch}
+        inputState={props.profileInputText}
+        addPost={props.addPost}
+        updateState={props.updateState}
       />
-      <MyPosts state={props.state} />
+      <MyPosts posts={props.posts} />
     </section>
   );
 }

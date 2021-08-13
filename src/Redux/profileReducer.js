@@ -1,5 +1,5 @@
-export const UPDATE_PROFILE_STATE = "updateProfileState";
-export const ADD_POST = "addPost";
+const UPDATE_PROFILE_STATE = "updateProfileState";
+const ADD_POST = "addPost";
 
 //===================== INITIAL STATE ============================
 
@@ -16,25 +16,23 @@ const initialState = {
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_POST:
-      const posts = state.posts;
-
       const newPost = {
-        id: posts[posts.length - 1].id + 1, // incrementing last post id and using it as new post id
+        id: state.posts[state.posts.length - 1].id + 1, // incrementing last post id and using it as new post id
         text: state.profileInputText,
         likes: 0,
       };
-      posts.push(newPost);
-      state.profileInputText = "";
-      break;
+      return {
+        ...state,
+        posts: [...state.posts, newPost],
+        profileInputText: "",
+      };
 
     case UPDATE_PROFILE_STATE:
-      state.profileInputText = action.profileInputText;
-      break;
+      return { ...state, profileInputText: action.profileInputText };
 
     default:
-      break;
+      return state;
   }
-  return state;
 }
 
 //===================== ACTION CREATORS ============================

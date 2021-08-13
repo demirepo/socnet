@@ -1,30 +1,25 @@
 import React from "react";
-import DialogItem from "./DialogItem/DialogItem";
-import Message from "./Messages/Messages";
-
 import s from "./Dialogs.module.css";
-import {
-  updateDialogStateActionCreator,
-  postMessageActionCreator,
-} from "../../redux/dialogReducer";
+import DialogItem from "./DialogItem/DialogItem";
+import Messages from "./Messages/Messages";
 
 export default function Dialogs(props) {
-  const dialogItemsList = props.state.dialogs.map((d) => (
+  const dialogItemsList = props.dialogs.map((d) => (
     <DialogItem key={d.id} id={d.id} name={d.name} path={d.avatarPath} />
   ));
 
-  const messageList = props.state.dialogHistory.userId1.map((m) => {
+  const messageList = props.messages.userId1.map((m) => {
     const sideClass = m.author === "me" ? "flexLeft" : "flexRight";
-    return <Message key={m.id} side={sideClass} text={m.text} />;
+    return <Messages key={m.id} side={sideClass} text={m.text} />;
   });
 
   const postTextArea = () => {
-    props.dispatch(postMessageActionCreator());
+    props.postTextArea();
   };
 
   const updateState = (e) => {
     let text = e.target.value;
-    props.dispatch(updateDialogStateActionCreator(text));
+    props.updateState(text);
   };
 
   return (
@@ -38,7 +33,7 @@ export default function Dialogs(props) {
           placeholder="Введите текст сообщения..."
           className={s.textArea}
           rows="8"
-          value={props.state.dialogInputText}
+          value={props.dialogInputText}
           onChange={updateState}
         ></textarea>
         <input

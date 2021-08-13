@@ -1,18 +1,13 @@
 import React from "react";
-import {
-  addPostActionCreator,
-  updateProfileStateActionCreator,
-} from "../../../redux/profileReducer";
-
 import s from "./NewPost.module.css";
 
 export default function NewPost(props) {
   const updateState = (e) => {
     let text = e.target.value;
-    props.dispatch(updateProfileStateActionCreator(text));
+    props.updateState(text);
   };
 
-  const addPost = () => props.dispatch(addPostActionCreator());
+  const addPost = () => props.addPost();
 
   return (
     <div className={s.newPost}>
@@ -22,7 +17,7 @@ export default function NewPost(props) {
           <textarea
             cols="30"
             rows="10"
-            value={props.inputState}
+            value={props.profileInputState}
             onChange={updateState}
           ></textarea>
           <button onClick={addPost}>Добавить новый пост</button>

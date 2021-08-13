@@ -18,15 +18,7 @@ const store = {
         { id: 2, name: "Пушкин", avatarPath: "/img/2.jpg" },
         { id: 3, name: "Есенин", avatarPath: "/img/3.jpg" },
       ],
-      messages: [
-        { id: 2, text: "Каг дела?" },
-        {
-          id: 1,
-          text: "Дым табачный воздух выел, комната - глава в крученыховском аде. Вспомни - за этим окном впервые руки твои, исступленный, гладил",
-        },
-        { id: 3, text: "Ой все!" },
-      ],
-      dialogHistory: {
+      messages: {
         userId1: [
           {
             id: 1,

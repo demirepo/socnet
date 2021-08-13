@@ -1,5 +1,5 @@
-export const UPDATE_DIALOG_STATE = "updateDialogState";
-export const POST_MESSAGE = "postMessage";
+const UPDATE_DIALOG_STATE = "updateDialogState";
+const POST_MESSAGE = "postMessage";
 
 //===================== INITIAL STATE ============================
 
@@ -9,15 +9,7 @@ const initialState = {
     { id: 2, name: "Пушкин", avatarPath: "/img/2.jpg" },
     { id: 3, name: "Есенин", avatarPath: "/img/3.jpg" },
   ],
-  messages: [
-    { id: 2, text: "Каг дела?" },
-    {
-      id: 1,
-      text: "Дым табачный воздух выел, комната - глава в крученыховском аде. Вспомни - за этим окном впервые руки твои, исступленный, гладил",
-    },
-    { id: 3, text: "Ой все!" },
-  ],
-  dialogHistory: {
+  messages: {
     userId1: [
       {
         id: 1,
@@ -52,27 +44,31 @@ const initialState = {
 
 export default function dialogReducer(state = initialState, action) {
   switch (action.type) {
+    //======================================
     case POST_MESSAGE:
-      const messages = state.dialogHistory.userId1;
+      const mess = state.messages.userId1;
 
       const newMessage = {
-        id: messages[messages.length - 1].id + 1, // incrementing last post id and using it as new post id
+        id: mess[mess.length - 1].id + 1, // incrementing last post id and using it as new post id
         author: "me",
         text: state.dialogInputText,
         time: new Date().toLocaleTimeString(),
       };
-      messages.push(newMessage);
-      state.dialogInputText = "";
-      break;
-
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          userId1: [...state.messages.userId1, newMessage],
+        },
+        dialogInputText: "",
+      };
+    //======================================
     case UPDATE_DIALOG_STATE:
-      state.dialogInputText = action.dialogInputText;
-      break;
+      return { ...state, dialogInputText: action.dialogInputText };
 
     default:
-      break;
+      return state;
   }
-  return state;
 }
 //===================== ACTION CREATORS ============================
 
