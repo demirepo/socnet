@@ -50,7 +50,17 @@ export default function usersReducer(state = initialState, action) {
         }),
       };
     case SET_USERS:
-      return { ...state, users: [...state.users, ...action.users] };
+      console.log(action.users);
+      let newUsers = action.users.map((user) => ({
+        id: user.cell,
+        name: user.name.first + " " + user.name.last,
+        location: { city: user.location.city, country: user.location.country },
+        followed: false,
+        avatar: user.picture.large,
+        age: user.dob.age,
+        status: user.email,
+      }));
+      return { ...state, users: [...state.users, ...newUsers] };
     default:
       return state;
   }

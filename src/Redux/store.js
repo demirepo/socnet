@@ -51,7 +51,7 @@ const store = {
   },
 
   _callSubscriber() {
-    console.log("заглушка, подменяемая на функцию-колбек observer");
+    // console.log("заглушка, подменяемая на функцию-колбек observer");
   },
 
   getState() {

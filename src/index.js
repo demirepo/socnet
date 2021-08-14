@@ -7,16 +7,15 @@ import { Provider } from "react-redux";
 
 // export function renderAll(state) {
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 
 window.store = store.getState();
-console.log("STATE", store.getState());
 // }
 
 // renderAll(store.getState());

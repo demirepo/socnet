@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setUsers: () => dispatch(setUsersAC()),
+    setUsers: (users) => dispatch(setUsersAC(users)),
     toggleFollow: (userId) => dispatch(toggleFollowAC(userId)),
   };
 };
