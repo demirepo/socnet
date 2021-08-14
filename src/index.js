@@ -9,15 +9,14 @@ import { Provider } from "react-redux";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App
-        state={store.getState()}
-        dispatch={store.dispatch.bind(store)}
-        store={store}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+window.store = store.getState();
+console.log("STATE", store.getState());
 // }
 
 // renderAll(store.getState());

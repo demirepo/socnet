@@ -9,8 +9,9 @@ import Settings from "./components/Settings/Settings";
 
 import { BrowserRouter, Route } from "react-router-dom";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
-export default function App(props) {
+export default function App() {
   return (
     <BrowserRouter>
       <div className="wrapper">
@@ -19,6 +20,7 @@ export default function App(props) {
         <div className="wrapper-content">
           <Route path="/profile" render={() => <ProfileContainer />} />
           <Route path="/dialogs" render={() => <DialogsContainer />} />
+          <Route path="/users" render={() => <UsersContainer />} />
           <Route path="/news" component={News} />
           <Route path="/music" component={Music} />
           <Route path="/settings" component={Settings} />

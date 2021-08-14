@@ -17,6 +17,11 @@ export default function Nav() {
           </NavLink>
         </li>
         <li className={s.navbar__item}>
+          <NavLink className={s.navbar__link} to="/users">
+            Find&nbsp;users
+          </NavLink>
+        </li>
+        <li className={s.navbar__item}>
           <NavLink className={s.navbar__link} to="/news">
             News
           </NavLink>
