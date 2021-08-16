@@ -1,39 +1,16 @@
 const TOGGLE_FOLLOWED = "toggleFollowed";
 const SHOW_MORE = "showMore";
 const SET_USERS = "setUsers";
-
+const SET_CURRENT_PAGE = "setCurrentPage";
+const SET_PAGE_SIZE = "setPageSize";
 //===================== INITIAL STATE ============================
 
 const initialState = {
-  users: [
-    {
-      id: 1,
-      name: "Василий",
-      location: { city: "Moscow", country: "Russia" },
-      followed: false,
-      avatar: "/img/ava.jpg ",
-      age: "29",
-      status: "Брат за брата - так за основу взято",
-    },
-    {
-      id: 2,
-      name: "Татьяна",
-      location: { city: "Ростов-на-Дону", country: "Russia" },
-      followed: true,
-      avatar: "/img/ava.jpg ",
-      age: "18",
-      status: "Меня сложно найти, легко потерять и невозможно забыть",
-    },
-    {
-      id: 3,
-      name: "Eduard",
-      location: { city: "Pattaya", country: "Thailand" },
-      followed: false,
-      avatar: "/img/ava.jpg ",
-      age: "36",
-      status: "One thousand",
-    },
-  ],
+  users: [],
+  pageSize: 5,
+  totalUsersCount: 5,
+  currentPage: 1,
+  pagesCount: 1,
 };
 //===================== REDUCER ============================
 
@@ -49,9 +26,9 @@ export default function usersReducer(state = initialState, action) {
           return user;
         }),
       };
+
     case SET_USERS:
-      console.log(action.users);
-      let newUsers = action.users.map((user) => ({
+      const newUsers = action.users.map((user) => ({
         id: user.cell,
         name: user.name.first + " " + user.name.last,
         location: { city: user.location.city, country: user.location.country },
@@ -60,7 +37,19 @@ export default function usersReducer(state = initialState, action) {
         age: user.dob.age,
         status: user.email,
       }));
-      return { ...state, users: [...state.users, ...newUsers] };
+
+      return {
+        ...state,
+        users: newUsers && [...newUsers],
+        totalUsersCount: newUsers && newUsers.length,
+      };
+
+    case SET_CURRENT_PAGE:
+      return { ...state, currentPage: +action.currentPage };
+
+    case SET_PAGE_SIZE:
+      return { ...state, pageSize: +action.pageSize };
+
     default:
       return state;
   }
@@ -71,11 +60,15 @@ export default function usersReducer(state = initialState, action) {
 export function toggleFollowAC(userId) {
   return { type: TOGGLE_FOLLOWED, userId }; // значение userId присваивается автоматически называемому ключу userId
 }
-
 export function showMoreAC() {
   return { type: SHOW_MORE };
 }
-
 export function setUsersAC(users) {
-  return { type: SET_USERS, users };
+  return { type: SET_USERS, users: users };
+}
+export function setCurrentPageAC(currentPage) {
+  return { type: SET_CURRENT_PAGE, currentPage: currentPage };
+}
+export function setPageSizeAC(pageSize) {
+  return { type: SET_PAGE_SIZE, pageSize: pageSize };
 }

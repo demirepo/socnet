@@ -36,3 +36,36 @@ button {
   margin-top: 0 0 0 0;
   width: 96px;
 }
+
+.pageNumber {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  text-align: center;
+  margin-right: 20px;
+  cursor: pointer;
+  transform: scale(1);
+  transition: all 0.2s ease;
+}
+.pageNumber:hover {
+  transform: scale(1.5);
+}
+
+.active {
+  transform: scale(1.5);
+  font-weight: bold;
+}
+
+.pagination {
+  position: relative;
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 15px;
+}
+
+.select {
+  position: absolute;
+  right: 10px;
+}
