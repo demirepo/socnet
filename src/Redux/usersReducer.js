@@ -3,6 +3,7 @@ const SHOW_MORE = "showMore";
 const SET_USERS = "setUsers";
 const SET_CURRENT_PAGE = "setCurrentPage";
 const SET_PAGE_SIZE = "setPageSize";
+const SET_IN_PROGRESS = "setInProgress";
 //===================== INITIAL STATE ============================
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   totalUsersCount: 0,
   currentPage: 1,
   pagesCount: 1,
+  inProgress: true,
 };
 //===================== REDUCER ============================
 
@@ -57,6 +59,9 @@ export default function usersReducer(state = initialState, action) {
     case SET_PAGE_SIZE:
       return { ...state, pageSize: +action.pageSize };
 
+    case SET_IN_PROGRESS:
+      return { ...state, inProgress: action.inProgress };
+
     default:
       return state;
   }
@@ -64,18 +69,21 @@ export default function usersReducer(state = initialState, action) {
 
 //===================== ACTION CREATORS ============================
 
-export function toggleFollowAC(userId) {
+export function toggleFollow(userId) {
   return { type: TOGGLE_FOLLOWED, userId }; // значение userId присваивается автоматически называемому ключу userId
 }
-export function showMoreAC() {
+export function showMore() {
   return { type: SHOW_MORE };
 }
-export function setUsersAC(data) {
+export function setUsers(data) {
   return { type: SET_USERS, data: data };
 }
-export function setCurrentPageAC(currentPage) {
+export function setCurrentPage(currentPage) {
   return { type: SET_CURRENT_PAGE, currentPage: currentPage };
 }
-export function setPageSizeAC(pageSize) {
+export function setPageSize(pageSize) {
   return { type: SET_PAGE_SIZE, pageSize: pageSize };
+}
+export function setInProgress(inProgress) {
+  return { type: SET_IN_PROGRESS, inProgress: inProgress };
 }

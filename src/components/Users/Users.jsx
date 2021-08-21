@@ -1,4 +1,5 @@
 import s from "./Users.module.css";
+import Spinner from "../Spinner/Spinner";
 
 export default function User(props) {
   let totalUsersCount = props.totalUsersCount;
@@ -22,6 +23,8 @@ export default function User(props) {
 
   return (
     <div>
+      {props.inProgress && <Spinner />}
+
       <div className={s.select}>
         Результатов на странице:&nbsp;
         <select
@@ -35,6 +38,7 @@ export default function User(props) {
           <option value="100">100</option>
         </select>
       </div>
+
       {props.users.map((user) => (
         <div key={user.id}>
           <div className={s.usersItem}>
@@ -60,6 +64,7 @@ export default function User(props) {
           </div>
         </div>
       ))}
+
       <div className={s.pagination}>
         <div>{pages}</div>
       </div>

@@ -1,0 +1,10 @@
+.spinner {
+  position: fixed;
+  top: calc(50% - 100px);
+  left: 50%;
+  margin: 0px auto;
+  transform: scale(200%);
+  box-shadow: 0 0 50px 50px white;
+  z-index: 1;
+  /* border-radius: 50%;  */
+}
