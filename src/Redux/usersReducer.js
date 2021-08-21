@@ -7,8 +7,8 @@ const SET_PAGE_SIZE = "setPageSize";
 
 const initialState = {
   users: [],
-  pageSize: 5,
-  totalUsersCount: 5,
+  pageSize: 100,
+  totalUsersCount: 0,
   currentPage: 1,
   pagesCount: 1,
 };
@@ -28,20 +28,27 @@ export default function usersReducer(state = initialState, action) {
       };
 
     case SET_USERS:
-      const newUsers = action.users.map((user) => ({
-        id: user.cell,
-        name: user.name.first + " " + user.name.last,
-        location: { city: user.location.city, country: user.location.country },
-        followed: false,
-        avatar: user.picture.large,
-        age: user.dob.age,
-        status: user.email,
+      const newUsers = action.data.items.map((user) => ({
+        id: user.id,
+        name: user.name,
+        followed: user.followed,
+        avatar: user.photos.large || "/img/ava.jpg",
+        status: user.status,
       }));
+      // const newUsers = action.users.map((user) => ({
+      //   id: user.cell,
+      //   name: user.name.first + " " + user.name.last,
+      //   location: { city: user.location.city, country: user.location.country },
+      //   followed: false,
+      //   avatar: user.picture.large,
+      //   age: user.dob.age,
+      //   status: user.email,
+      // }));
 
       return {
         ...state,
-        users: newUsers && [...newUsers],
-        totalUsersCount: newUsers && newUsers.length,
+        users: [...newUsers],
+        totalUsersCount: action.data.totalCount,
       };
 
     case SET_CURRENT_PAGE:
@@ -63,8 +70,8 @@ export function toggleFollowAC(userId) {
 export function showMoreAC() {
   return { type: SHOW_MORE };
 }
-export function setUsersAC(users) {
-  return { type: SET_USERS, users: users };
+export function setUsersAC(data) {
+  return { type: SET_USERS, data: data };
 }
 export function setCurrentPageAC(currentPage) {
   return { type: SET_CURRENT_PAGE, currentPage: currentPage };
