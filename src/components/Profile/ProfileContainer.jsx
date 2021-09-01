@@ -1,37 +1,38 @@
 import {
-  addPostActionCreator,
-  updateProfileStateActionCreator,
+  addPost,
+  updateProfileState,
+  setProfileData,
 } from "../../redux/profileReducer";
 import { connect } from "react-redux";
 import Profile from "./Profile";
+import React from "react";
+import axios from "axios";
+import { withRouter } from "react-router-dom";
 
-// export default function Profile(props) {
-//   return (
-//     <section className={s.content}>
-//       <img
-//         className={s.bigpic}
-//         src="https://fartuk.ru/upload/resize_cache/iblock/f42/1920_533_1d2c0be91f8b91a0d3c91a9448f348e3c/skinali_nyu_york_195782.jpg"
-//         alt="bigpic"
-//       />
-//       <UserInfo />
-//       <NewPost inputState={props.profileInputText} dispatch={props.dispatch} />
-//       <MyPosts state={props.state} />
-//     </section>
-//   );
-// }
+class ProfileContainer extends React.Component {
+  componentDidMount() {
+    let userId = this.props.match.params.userId || 19090;
+    axios
+      .get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+      .then((response) => {
+        this.props.setProfileData(response.data);
+      });
+  }
+
+  render() {
+    return <Profile {...this.props} />;
+  }
+}
 const mapStateToProps = (state) => {
   return {
     profileInputState: state.profilePage.profileInputText,
     posts: state.profilePage.posts,
+    profileData: state.profilePage.profileData,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addPost: () => dispatch(addPostActionCreator()),
-    updateState: (text) => dispatch(updateProfileStateActionCreator(text)),
-  };
-};
-
-const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(Profile);
-export default ProfileContainer;
+export default connect(mapStateToProps, {
+  addPost,
+  updateProfileState,
+  setProfileData,
+})(withRouter(ProfileContainer));

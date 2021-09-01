@@ -7,3 +7,19 @@
   width: 60px;
   height: 60px;
 }
+
+.login {
+  float: right;
+  margin: 10px;
+  background-color: #fff;
+  padding: 5px 10px;
+  font-size: 1.3rem;
+  vertical-align: middle;
+}
+
+.login img {
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}

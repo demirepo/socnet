@@ -1,5 +1,6 @@
 import s from "./Users.module.css";
 import Spinner from "../Spinner/Spinner";
+import { NavLink } from "react-router-dom";
 
 export default function User(props) {
   let totalUsersCount = props.totalUsersCount;
@@ -43,7 +44,9 @@ export default function User(props) {
         <div key={user.id}>
           <div className={s.usersItem}>
             <div className={s.avatar}>
-              <img src={user.avatar} alt="avatar" />
+              <NavLink to={`/profile/${user.id}`}>
+                <img src={user.avatar} alt="avatar" />
+              </NavLink>
             </div>
             <div className={s.info}>
               <p className={s.name}>{user.name}</p>

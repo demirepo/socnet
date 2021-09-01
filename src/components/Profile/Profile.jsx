@@ -14,11 +14,11 @@ export default function Profile(props) {
         src="https://fartuk.ru/upload/resize_cache/iblock/f42/1920_533_1d2c0be91f8b91a0d3c91a9448f348e3c/skinali_nyu_york_195782.jpg"
         alt="bigpic"
       />
-      <UserInfo />
+      <UserInfo data={props.profileData} />
       <NewPost
         inputState={props.profileInputText}
         addPost={props.addPost}
-        updateState={props.updateState}
+        updateState={props.updateProfileState}
       />
       <MyPosts posts={props.posts} />
     </section>
