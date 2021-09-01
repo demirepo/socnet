@@ -5,7 +5,7 @@ import s from "./Header.module.css";
 export default function Header(props) {
   return (
     <header className={s.header}>
-      <img src="https://shmector.com/_ph/13/74615743.png" alt="logo"></img>
+      <img src="/img/logo.png" alt="logo"></img>
       {props.auth.authorized ? (
         <div className={s.login}>
           <img width="10" height="10" src="/img/ava-blue.jpg" alt="" />

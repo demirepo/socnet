@@ -6,23 +6,17 @@ import {
   setPageSize,
   setInProgress,
 } from "../../redux/usersReducer";
-import axios from "axios";
 import React from "react";
 import Users from "./Users";
+import { usersAPI } from "../../api/api";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
     this.props.setInProgress(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-        {
-          withCredentials: true,
-          headers: { "API-KEY": "2347c37c-5c55-40d1-89f1-48177d8cbf03" },
-        }
-      )
+    usersAPI
+      .getUsers(this.props.currentPage, this.props.pageSize)
       .then((response) => {
-        this.props.setUsers(response.data);
+        this.props.setUsers(response);
         this.props.setInProgress(false);
       });
   }
@@ -30,67 +24,32 @@ class UsersContainer extends React.Component {
   setPageSize = (pageSize) => {
     this.props.setInProgress(true);
     this.props.setPageSize(pageSize);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${pageSize}`,
-        {
-          withCredentials: true,
-          headers: { "API-KEY": "2347c37c-5c55-40d1-89f1-48177d8cbf03" },
-        }
-      )
-      .then((response) => {
-        this.props.setUsers(response.data);
-        this.props.setInProgress(false);
-      });
+    usersAPI.getUsers(this.props.currentPage, pageSize).then((response) => {
+      this.props.setUsers(response);
+      this.props.setInProgress(false);
+    });
   };
-  //=====================================================================================================
 
   toggleFollow = (userId) => {
     let userFollowed = this.props.users.filter((u) => u.id === userId)[0]
       .followed;
-    console.log(userFollowed);
+
     if (userFollowed) {
-      axios
-        .delete(
-          `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
-          {
-            withCredentials: true,
-            headers: { "API-KEY": "2347c37c-5c55-40d1-89f1-48177d8cbf03" },
-          }
-        )
-        .then((response) => {
-          if (response.data.resultCode === 0) this.props.toggleFollow(userId);
-        });
+      usersAPI.unfollowUser(userId).then((response) => {
+        if (response.data.resultCode === 0) this.props.toggleFollow(userId);
+      });
     } else {
-      axios
-        .post(
-          `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
-          null,
-          {
-            withCredentials: true,
-            headers: { "API-KEY": "2347c37c-5c55-40d1-89f1-48177d8cbf03" },
-          }
-        )
-        .then((response) => {
-          if (response.data.resultCode === 0) this.props.toggleFollow(userId);
-        });
+      usersAPI.followUser(userId).then((response) => {
+        if (response.data.resultCode === 0) this.props.toggleFollow(userId);
+      });
     }
   };
-  //=====================================================================================================
 
   setCurrentPage = (currentPage) => {
     this.props.setCurrentPage(currentPage);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`,
-        {
-          withCredentials: true,
-          headers: { "API-KEY": "2347c37c-5c55-40d1-89f1-48177d8cbf03" },
-        }
-      )
-      .then((response) => {
-        this.props.setUsers(response.data);
-      });
+    usersAPI.getUsers(currentPage, this.props.pageSize).then((response) => {
+      this.props.setUsers(response);
+    });
   };
 
   render() {
