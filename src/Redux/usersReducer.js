@@ -4,6 +4,7 @@ const SET_USERS = "setUsers";
 const SET_CURRENT_PAGE = "setCurrentPage";
 const SET_PAGE_SIZE = "setPageSize";
 const SET_IN_PROGRESS = "setInProgress";
+const TOGGLE_DISABLE_FOLLOW_BUTTON = "toggleDisableFollowButton";
 //===================== INITIAL STATE ============================
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   currentPage: 1,
   pagesCount: 1,
   inProgress: true,
+  followButtonIsDisabled: [],
 };
 //===================== REDUCER ============================
 
@@ -62,6 +64,16 @@ export default function usersReducer(state = initialState, action) {
     case SET_IN_PROGRESS:
       return { ...state, inProgress: action.inProgress };
 
+    case TOGGLE_DISABLE_FOLLOW_BUTTON:
+      const newVal = state.followButtonIsDisabled.includes(action.userId)
+        ? state.followButtonIsDisabled.filter((id) => id !== action.userId)
+        : [...state.followButtonIsDisabled, action.userId];
+      console.log(newVal);
+      return {
+        ...state,
+        followButtonIsDisabled: newVal,
+      };
+
     default:
       return state;
   }
@@ -86,4 +98,10 @@ export function setPageSize(pageSize) {
 }
 export function setInProgress(inProgress) {
   return { type: SET_IN_PROGRESS, inProgress: inProgress };
+}
+export function toggleDisableFollowButton(userId) {
+  return {
+    type: TOGGLE_DISABLE_FOLLOW_BUTTON,
+    userId,
+  };
 }

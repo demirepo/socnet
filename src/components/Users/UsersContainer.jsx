@@ -5,6 +5,7 @@ import {
   setCurrentPage,
   setPageSize,
   setInProgress,
+  toggleDisableFollowButton,
 } from "../../redux/usersReducer";
 import React from "react";
 import Users from "./Users";
@@ -33,14 +34,18 @@ class UsersContainer extends React.Component {
   toggleFollow = (userId) => {
     let userFollowed = this.props.users.filter((u) => u.id === userId)[0]
       .followed;
-
+    this.props.toggleDisableFollowButton(userId); // disabling button during query
     if (userFollowed) {
       usersAPI.unfollowUser(userId).then((response) => {
-        if (response.data.resultCode === 0) this.props.toggleFollow(userId);
+        if (response.data.resultCode === 0) {
+          this.props.toggleFollow(userId);
+        }
+        this.props.toggleDisableFollowButton(userId);
       });
     } else {
       usersAPI.followUser(userId).then((response) => {
         if (response.data.resultCode === 0) this.props.toggleFollow(userId);
+        this.props.toggleDisableFollowButton(userId);
       });
     }
   };
@@ -64,6 +69,7 @@ class UsersContainer extends React.Component {
         toggleFollow={this.toggleFollow}
         setCurrentPage={this.setCurrentPage}
         inProgress={this.props.inProgress}
+        followButtonIsDisabled={this.props.followButtonIsDisabled}
       />
     );
   }
@@ -78,6 +84,7 @@ const mapStateToProps = (state) => {
     pagesCount: state.usersPage.pagesCount,
     state: state.usersPage,
     inProgress: state.usersPage.inProgress,
+    followButtonIsDisabled: state.usersPage.followButtonIsDisabled,
   };
 };
 
@@ -96,4 +103,5 @@ export default connect(mapStateToProps, {
   setCurrentPage,
   setPageSize,
   setInProgress,
+  toggleDisableFollowButton,
 })(UsersContainer);

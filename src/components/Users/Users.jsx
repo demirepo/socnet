@@ -1,6 +1,7 @@
 import s from "./Users.module.css";
 import Spinner from "../Spinner/Spinner";
 import { NavLink } from "react-router-dom";
+import FollowButton from "./FollowButton";
 
 export default function User(props) {
   let totalUsersCount = props.totalUsersCount;
@@ -50,19 +51,11 @@ export default function User(props) {
             </div>
             <div className={s.info}>
               <p className={s.name}>{user.name}</p>
-              {/* <p className={s.location}>
-                  {user.location.city} ({user.location.country})
-                </p> */}
-              {user.followed ? (
-                <button onClick={() => props.toggleFollow(user.id)}>
-                  Отписаться
-                </button>
-              ) : (
-                <button onClick={() => props.toggleFollow(user.id)}>
-                  Подписаться
-                </button>
-              )}
-              {/* <button>Написать сообщение</button> */}
+              <FollowButton
+                followButtonIsDisabled={props.followButtonIsDisabled}
+                user={user}
+                toggleFollow={props.toggleFollow}
+              />
             </div>
           </div>
         </div>
