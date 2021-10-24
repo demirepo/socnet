@@ -1,3 +1,4 @@
+import { authAPI } from "../api/api";
 const SET_USER_AUTH_DATA = "setUserAuthData";
 const SET_AUTH_IN_PROGRESS = "setAuthInProgress";
 
@@ -39,5 +40,21 @@ export function setAuthInProgress(inProgress) {
   return {
     type: SET_AUTH_IN_PROGRESS,
     inProgress,
+  };
+}
+
+export function authMeThunkCreator() {
+  return (dispatch) => {
+    authAPI.authMe().then((response) => {
+      if (response.status === 200) {
+        if (response.data.resultCode === 0) {
+          let { id, login, email } = response.data.data;
+          let authorized = true;
+          dispatch(setUserAuthData(id, login, email, authorized));
+        }
+      } else {
+        console.log("Ошибка сервера:", response.status);
+      }
+    });
   };
 }

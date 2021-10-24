@@ -1,25 +1,24 @@
 import {
   addPost,
   updateProfileState,
-  setProfileData,
+  setProfileThunkCreator,
 } from "../../redux/profileReducer";
 import { connect } from "react-redux";
 import Profile from "./Profile";
 import React from "react";
-import axios from "axios";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
+import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
     let userId = this.props.match.params.userId || 19090;
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-      .then((response) => {
-        this.props.setProfileData(response.data);
-      });
+    this.props.setProfileThunkCreator(userId);
   }
 
   render() {
+    console.log(this.props.isAuthed);
+
+    if (!this.props.isAuthed) return <Redirect to={"/login"} />;
     return <Profile {...this.props} />;
   }
 }
@@ -28,11 +27,15 @@ const mapStateToProps = (state) => {
     profileInputState: state.profilePage.profileInputText,
     posts: state.profilePage.posts,
     profileData: state.profilePage.profileData,
+    isAuthed: state.auth.authorized,
   };
 };
 
-export default connect(mapStateToProps, {
-  addPost,
-  updateProfileState,
-  setProfileData,
-})(withRouter(ProfileContainer));
+export default compose(
+  connect(mapStateToProps, {
+    addPost,
+    updateProfileState,
+    setProfileThunkCreator,
+  }),
+  withRouter
+)(ProfileContainer);

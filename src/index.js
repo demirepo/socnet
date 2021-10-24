@@ -15,7 +15,7 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-window.state = store.getState();
+window.store = store; // for debugging purpose
 // }
 
 // renderAll(store.getState());

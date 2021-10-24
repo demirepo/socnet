@@ -7,6 +7,7 @@ export default function User(props) {
   let totalUsersCount = props.totalUsersCount;
   let pagesCount = Math.ceil(totalUsersCount / props.pageSize);
   let pages = [];
+  // making pagination
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(
       <span
@@ -24,23 +25,24 @@ export default function User(props) {
   }
 
   return (
+    // rendering loading spinner
     <div>
       {props.inProgress && <Spinner />}
-
+      {/* rendering select, that controlls page size*/}
       <div className={s.select}>
         Результатов на странице:&nbsp;
         <select
           name=""
           id=""
           value={props.pageSize}
-          onChange={(e) => props.setPageSize(e.target.value)}
+          onChange={(e) => props.setPageSize(props.currentPage, e.target.value)}
         >
           <option value="10">10</option>
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
       </div>
-
+      {/* transforming array of users into user's cards */}
       {props.users.map((user) => (
         <div key={user.id}>
           <div className={s.usersItem}>
@@ -60,7 +62,7 @@ export default function User(props) {
           </div>
         </div>
       ))}
-
+      {/* showing pagination */}
       <div className={s.pagination}>
         <div>{pages}</div>
       </div>

@@ -1,4 +1,6 @@
-const TOGGLE_FOLLOWED = "toggleFollowed";
+import { usersAPI } from "../api/api";
+
+const TOGGLE_FOLLOW = "toggleFollow";
 const SHOW_MORE = "showMore";
 const SET_USERS = "setUsers";
 const SET_CURRENT_PAGE = "setCurrentPage";
@@ -13,14 +15,14 @@ const initialState = {
   totalUsersCount: 0,
   currentPage: 1,
   pagesCount: 1,
-  inProgress: true,
+  inProgress: false,
   followButtonIsDisabled: [],
 };
 //===================== REDUCER ============================
 
 export default function usersReducer(state = initialState, action) {
   switch (action.type) {
-    case TOGGLE_FOLLOWED:
+    case TOGGLE_FOLLOW:
       return {
         ...state,
         users: state.users.map((user) => {
@@ -39,15 +41,6 @@ export default function usersReducer(state = initialState, action) {
         avatar: user.photos.large || "/img/ava.jpg",
         status: user.status,
       }));
-      // const newUsers = action.users.map((user) => ({
-      //   id: user.cell,
-      //   name: user.name.first + " " + user.name.last,
-      //   location: { city: user.location.city, country: user.location.country },
-      //   followed: false,
-      //   avatar: user.picture.large,
-      //   age: user.dob.age,
-      //   status: user.email,
-      // }));
 
       return {
         ...state,
@@ -68,7 +61,6 @@ export default function usersReducer(state = initialState, action) {
       const newVal = state.followButtonIsDisabled.includes(action.userId)
         ? state.followButtonIsDisabled.filter((id) => id !== action.userId)
         : [...state.followButtonIsDisabled, action.userId];
-      console.log(newVal);
       return {
         ...state,
         followButtonIsDisabled: newVal,
@@ -82,7 +74,7 @@ export default function usersReducer(state = initialState, action) {
 //===================== ACTION CREATORS ============================
 
 export function toggleFollow(userId) {
-  return { type: TOGGLE_FOLLOWED, userId }; // значение userId присваивается автоматически называемому ключу userId
+  return { type: TOGGLE_FOLLOW, userId }; // значение userId присваивается автоматически называемому ключу userId
 }
 export function showMore() {
   return { type: SHOW_MORE };
@@ -103,5 +95,40 @@ export function toggleDisableFollowButton(userId) {
   return {
     type: TOGGLE_DISABLE_FOLLOW_BUTTON,
     userId,
+  };
+}
+//===================== THUNK CREATORS ============================
+export function getUsersThunkCreator(currentPage, pageSize) {
+  return (dispatch) => {
+    dispatch(setInProgress(true));
+    usersAPI.getUsers(currentPage, pageSize).then((response) => {
+      dispatch(setUsers(response));
+      dispatch(setInProgress(false));
+    });
+  };
+}
+
+export function toggleFollowThunkCreator(userId) {
+  return (dispatch, getState) => {
+    const {
+      usersPage: { users },
+    } = getState();
+    let isUserFollowed = users.filter((u) => u.id === userId)[0].followed;
+    dispatch(toggleDisableFollowButton(userId)); // disabling button during query
+    if (isUserFollowed) {
+      usersAPI.unfollowUser(userId).then((response) => {
+        if (response.data.resultCode === 0) {
+          dispatch(toggleFollow(userId));
+          dispatch(toggleDisableFollowButton(userId));
+        }
+      });
+    } else {
+      usersAPI.followUser(userId).then((response) => {
+        if (response.data.resultCode === 0) {
+          dispatch(toggleFollow(userId));
+          dispatch(toggleDisableFollowButton(userId));
+        }
+      });
+    }
   };
 }

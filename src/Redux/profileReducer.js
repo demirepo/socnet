@@ -1,3 +1,5 @@
+import { usersAPI } from "../api/api";
+
 const UPDATE_PROFILE_STATE = "updateProfileState";
 const ADD_POST = "addPost";
 const SET_PROFILE_DATA = "setProfileData";
@@ -52,4 +54,12 @@ export function addPost() {
 
 export function setProfileData(profileData) {
   return { type: SET_PROFILE_DATA, profileData };
+}
+
+export function setProfileThunkCreator(userId) {
+  return (dispatch) => {
+    usersAPI.getProfile(userId).then((response) => {
+      dispatch(setProfileData(response.data));
+    });
+  };
 }

@@ -8,6 +8,7 @@ import News from "./components/News/News";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import Settings from "./components/Settings/Settings";
 import UsersContainer from "./components/Users/UsersContainer";
+import Login from "./components/Login/Login";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/news" component={News} />
           <Route path="/music" component={Music} />
           <Route path="/settings" component={Settings} />
+          <Route path="/login" component={Login} />
           {/* <Route
             exact
             path="/"

@@ -6,55 +6,32 @@ import {
   setPageSize,
   setInProgress,
   toggleDisableFollowButton,
+  getUsersThunkCreator,
+  toggleFollowThunkCreator,
 } from "../../redux/usersReducer";
 import React from "react";
 import Users from "./Users";
-import { usersAPI } from "../../api/api";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    this.props.setInProgress(true);
-    usersAPI
-      .getUsers(this.props.currentPage, this.props.pageSize)
-      .then((response) => {
-        this.props.setUsers(response);
-        this.props.setInProgress(false);
-      });
+    this.props.getUsersThunkCreator(
+      this.props.currentPage,
+      this.props.pageSize
+    );
   }
 
-  setPageSize = (pageSize) => {
-    this.props.setInProgress(true);
+  setPageSize = (currentPage, pageSize) => {
     this.props.setPageSize(pageSize);
-    usersAPI.getUsers(this.props.currentPage, pageSize).then((response) => {
-      this.props.setUsers(response);
-      this.props.setInProgress(false);
-    });
+    this.props.getUsersThunkCreator(currentPage, pageSize);
   };
 
   toggleFollow = (userId) => {
-    let userFollowed = this.props.users.filter((u) => u.id === userId)[0]
-      .followed;
-    this.props.toggleDisableFollowButton(userId); // disabling button during query
-    if (userFollowed) {
-      usersAPI.unfollowUser(userId).then((response) => {
-        if (response.data.resultCode === 0) {
-          this.props.toggleFollow(userId);
-        }
-        this.props.toggleDisableFollowButton(userId);
-      });
-    } else {
-      usersAPI.followUser(userId).then((response) => {
-        if (response.data.resultCode === 0) this.props.toggleFollow(userId);
-        this.props.toggleDisableFollowButton(userId);
-      });
-    }
+    this.props.toggleFollowThunkCreator(userId);
   };
 
   setCurrentPage = (currentPage) => {
     this.props.setCurrentPage(currentPage);
-    usersAPI.getUsers(currentPage, this.props.pageSize).then((response) => {
-      this.props.setUsers(response);
-    });
+    this.props.getUsersThunkCreator(currentPage, this.props.pageSize);
   };
 
   render() {
@@ -104,4 +81,6 @@ export default connect(mapStateToProps, {
   setPageSize,
   setInProgress,
   toggleDisableFollowButton,
+  getUsersThunkCreator,
+  toggleFollowThunkCreator,
 })(UsersContainer);
