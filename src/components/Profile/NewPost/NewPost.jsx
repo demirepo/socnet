@@ -20,7 +20,9 @@ export default function NewPost(props) {
             value={props.profileInputState}
             onChange={updateState}
           ></textarea>
-          <button onClick={addPost}>Добавить новый пост</button>
+          <button className={s.newpostBtn} onClick={addPost}>
+            Добавить новый пост
+          </button>
         </fieldset>
       </div>
     </div>

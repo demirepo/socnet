@@ -58,3 +58,15 @@ export function authMeThunkCreator() {
     });
   };
 }
+
+export function loginThunk(credentials) {
+  return (dispatch) => {
+    authAPI.login(credentials).then((response) => {
+      if (response.data.resultCode === 0) {
+        console.log("Логин прошел удачно");
+      } else {
+        console.log(response.data.messages);
+      }
+    });
+  };
+}

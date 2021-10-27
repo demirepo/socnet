@@ -1,8 +1,9 @@
-import { usersAPI } from "../api/api";
+import { usersAPI, profileAPI } from "../api/api";
 
 const UPDATE_PROFILE_STATE = "updateProfileState";
 const ADD_POST = "addPost";
 const SET_PROFILE_DATA = "setProfileData";
+const SET_STATUS = "setStatus";
 
 //===================== INITIAL STATE ============================
 
@@ -14,6 +15,7 @@ const initialState = {
   ],
   profileInputText: "",
   profileData: {},
+  statusText: "some status",
 };
 //===================== REDUCER ============================
 
@@ -37,6 +39,9 @@ export default function profileReducer(state = initialState, action) {
     case SET_PROFILE_DATA:
       return { ...state, profileData: action.profileData };
 
+    case SET_STATUS:
+      return { ...state, statusText: action.statusText };
+
     default:
       return state;
   }
@@ -56,10 +61,32 @@ export function setProfileData(profileData) {
   return { type: SET_PROFILE_DATA, profileData };
 }
 
+export function setStatus(statusText) {
+  return { type: SET_STATUS, statusText };
+}
+
 export function setProfileThunkCreator(userId) {
   return (dispatch) => {
     usersAPI.getProfile(userId).then((response) => {
       dispatch(setProfileData(response.data));
+    });
+  };
+}
+
+export function getStatusFromServer(userId) {
+  return (dispatch) => {
+    profileAPI.getStatus(userId).then((response) => {
+      dispatch(setStatus(response.data));
+    });
+  };
+}
+
+export function updateStatusOnServer(statusText) {
+  return (dispatch) => {
+    profileAPI.updateStatus(statusText).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(setStatus(statusText));
+      }
     });
   };
 }

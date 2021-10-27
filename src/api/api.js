@@ -27,4 +27,16 @@ export const authAPI = {
   authMe() {
     return axiosInstance.get(`auth/me`);
   },
+  login(credentials) {
+    return axiosInstance.post(`auth/login`, credentials);
+  },
+};
+
+export const profileAPI = {
+  getStatus(userId) {
+    return axiosInstance.get(`/profile/status/${userId}`);
+  },
+  updateStatus(statusText) {
+    return axiosInstance.put(`/profile/status/`, { status: `${statusText}` });
+  },
 };
