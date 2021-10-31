@@ -1,31 +1,46 @@
 import React from "react";
-import { authAPI } from "../../api/api";
 import LoginForm from "../LoginForm/LoginForm";
-import { loginThunk } from "../../redux/authReducer";
+import { loginThunk, logoutThunk } from "../../redux/authReducer";
+import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 function Login(props) {
-  const onSubmit123 = (data) => {
+  const onSubmit = (data) => {
     const credentials = {
       email: data.login,
       password: data.password,
       rememberMe: data.rememberMe,
     };
-    // loginThunk(credentials);
-    authAPI.login(credentials).then((response) => {
-      if (response.data.resultCode === 0) {
-        console.log("Логин прошел удачно");
-      } else {
-        console.log(response.data.messages);
-      }
-    });
+    props.login(credentials);
+    // authAPI.login(credentials).then((response) => {
+    //   if (response.data.resultCode === 0) {
+    //     console.log("Логин прошел удачно");
+    //   } else {
+    //     console.log(response.data.messages);
+    //   }
+    // });
   };
+  if (props.isAuth) return <Redirect to={"/profile"} />;
 
   return (
     <div>
       <h2>Login</h2>
-      <LoginForm onSubmit={onSubmit123} />
+      <LoginForm onSubmit={onSubmit} />
     </div>
   );
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (credentials) => {
+      dispatch(loginThunk(credentials));
+    },
+    logout: () => {
+      dispatch(logoutThunk());
+    },
+  };
+};
+const mapStateToProps = (state) => {
+  return { isAuth: state.auth.authorized };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -10,6 +10,9 @@ export default function Header(props) {
         <div className={s.login}>
           <img width="10" height="10" src="/img/ava-blue.jpg" alt="" />
           {props.auth.login}
+          <button className={s.button} onClick={props.logoutThunk}>
+            Logout
+          </button>
         </div>
       ) : (
         <NavLink to={"/login"}>

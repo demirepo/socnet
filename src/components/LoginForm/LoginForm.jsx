@@ -3,8 +3,8 @@ import { Field, reduxForm } from "redux-form";
 import { Input } from "../common/FormControls/FormControls";
 import validator from "../../utils/validation";
 
+const min8 = validator.minLength(8);
 function LoginForm(props) {
-  const min8 = validator.minLength(8);
   return (
     <form onSubmit={props.handleSubmit}>
       <Field

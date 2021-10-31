@@ -30,6 +30,9 @@ export const authAPI = {
   login(credentials) {
     return axiosInstance.post(`auth/login`, credentials);
   },
+  logout() {
+    return axiosInstance.delete(`auth/login`);
+  },
 };
 
 export const profileAPI = {

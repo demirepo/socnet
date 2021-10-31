@@ -43,6 +43,8 @@ export function setAuthInProgress(inProgress) {
   };
 }
 
+//============================THUNKS=====================================
+
 export function authMeThunkCreator() {
   return (dispatch) => {
     authAPI.authMe().then((response) => {
@@ -63,7 +65,21 @@ export function loginThunk(credentials) {
   return (dispatch) => {
     authAPI.login(credentials).then((response) => {
       if (response.data.resultCode === 0) {
+        dispatch(authMeThunkCreator());
         console.log("Логин прошел удачно");
+      } else {
+        console.log(response.data.messages);
+      }
+    });
+  };
+}
+
+export function logoutThunk() {
+  return (dispatch) => {
+    authAPI.logout().then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(setUserAuthData(null, null, null, false));
+        console.log("Вы вышли из системы");
       } else {
         console.log(response.data.messages);
       }
