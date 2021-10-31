@@ -1,6 +1,5 @@
 import { usersAPI, profileAPI } from "../api/api";
 
-const UPDATE_PROFILE_STATE = "updateProfileState";
 const ADD_POST = "addPost";
 const SET_PROFILE_DATA = "setProfileData";
 const SET_STATUS = "setStatus";
@@ -24,7 +23,7 @@ export default function profileReducer(state = initialState, action) {
     case ADD_POST:
       const newPost = {
         id: state.posts[state.posts.length - 1].id + 1, // incrementing last post id and using it as new post id
-        text: state.profileInputText,
+        text: action.message,
         likes: 0,
       };
       return {
@@ -32,9 +31,6 @@ export default function profileReducer(state = initialState, action) {
         posts: [...state.posts, newPost],
         profileInputText: "",
       };
-
-    case UPDATE_PROFILE_STATE:
-      return { ...state, profileInputText: action.profileInputText };
 
     case SET_PROFILE_DATA:
       return { ...state, profileData: action.profileData };
@@ -49,12 +45,8 @@ export default function profileReducer(state = initialState, action) {
 
 //===================== ACTION CREATORS ============================
 
-export function updateProfileState(text) {
-  return { type: UPDATE_PROFILE_STATE, profileInputText: text };
-}
-
-export function addPost() {
-  return { type: ADD_POST };
+export function addPost(message) {
+  return { type: ADD_POST, message };
 }
 
 export function setProfileData(profileData) {

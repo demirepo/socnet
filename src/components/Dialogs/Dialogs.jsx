@@ -1,7 +1,10 @@
 import React from "react";
+import { Field, reduxForm } from "redux-form";
 import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Messages from "./Messages/Messages";
+import validator from "../../utils/validation";
+import { Textarea } from "../common/FormControls/FormControls";
 
 export default function Dialogs(props) {
   const dialogItemsList = props.dialogs.map((d) => (
@@ -13,36 +16,32 @@ export default function Dialogs(props) {
     return <Messages key={m.id} side={sideClass} text={m.text} />;
   });
 
-  const postTextArea = () => {
-    props.postTextArea();
-  };
-
-  const updateState = (e) => {
-    let text = e.target.value;
-    props.updateState(text);
-  };
-
   return (
-    <div>
+    <>
       <div className={s.container}>
         <ul className={s.dialogs}>{dialogItemsList}</ul>
         <div className={s.messages}>{messageList}</div>
       </div>
-      <div>
-        <textarea
-          placeholder="Введите текст сообщения..."
-          className={s.textArea}
-          rows="8"
-          value={props.dialogInputText}
-          onChange={updateState}
-        ></textarea>
-        <input
-          className={s.button}
-          onClick={postTextArea}
-          type="button"
-          value="Отправить сообщение"
-        />
-      </div>
-    </div>
+      <DialogInputReduxForm onSubmit={props.onSubmit} />
+    </>
   );
 }
+
+const max10 = validator.maxLength(10);
+const DialogInput = (props) => {
+  return (
+    <form onSubmit={props.handleSubmit}>
+      <Field
+        component={Textarea}
+        placeholder="Введите текст сообщения..."
+        className={s.textArea}
+        rows="8"
+        name={"dialogInput"}
+        validate={[max10]}
+      />
+      <button className={s.button}>Отправить сообщение</button>
+    </form>
+  );
+};
+
+let DialogInputReduxForm = reduxForm({ form: "dialogInput" })(DialogInput);

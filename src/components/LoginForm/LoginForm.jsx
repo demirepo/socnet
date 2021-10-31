@@ -1,21 +1,26 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import { Input } from "../common/FormControls/FormControls";
+import validator from "../../utils/validation";
 
 function LoginForm(props) {
+  const min8 = validator.minLength(8);
   return (
     <form onSubmit={props.handleSubmit}>
       <Field
         placeholder={"login"}
         name={"login"}
-        component={"input"}
+        component={Input}
         type={"text"}
+        validate={[validator.email]}
       />
       <br />
       <Field
         placeholder={"password"}
         name={"password"}
-        component={"input"}
+        component={Input}
         type={"password"}
+        validate={[min8]}
       />
       <br />
       <Field component={"input"} type={"checkbox"} name="rememberMe" id="" />
@@ -27,7 +32,5 @@ function LoginForm(props) {
     </form>
   );
 }
-let ReduxLoginForm = reduxForm({ form: "login" })(LoginForm);
-
-// export default reduxForm({ form: "login" })(LoginForm);
-export default ReduxLoginForm;
+let LoginReduxForm = reduxForm({ form: "login" })(LoginForm);
+export default LoginReduxForm;

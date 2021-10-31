@@ -1,4 +1,3 @@
-const UPDATE_DIALOG_STATE = "updateDialogState";
 const POST_MESSAGE = "postMessage";
 
 //===================== INITIAL STATE ============================
@@ -51,7 +50,7 @@ export default function dialogReducer(state = initialState, action) {
       const newMessage = {
         id: mess[mess.length - 1].id + 1, // incrementing last post id and using it as new post id
         author: "me",
-        text: state.dialogInputText,
+        text: action.dialogInput,
         time: new Date().toLocaleTimeString(),
       };
       return {
@@ -63,8 +62,6 @@ export default function dialogReducer(state = initialState, action) {
         dialogInputText: "",
       };
     //======================================
-    case UPDATE_DIALOG_STATE:
-      return { ...state, dialogInputText: action.dialogInputText };
 
     default:
       return state;
@@ -72,10 +69,6 @@ export default function dialogReducer(state = initialState, action) {
 }
 //===================== ACTION CREATORS ============================
 
-export function updateDialogStateActionCreator(text) {
-  return { type: UPDATE_DIALOG_STATE, dialogInputText: text };
-}
-
-export function postMessageActionCreator() {
-  return { type: POST_MESSAGE };
+export function postMessageActionCreator(dialogInput) {
+  return { type: POST_MESSAGE, dialogInput };
 }

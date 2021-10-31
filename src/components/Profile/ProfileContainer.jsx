@@ -6,7 +6,6 @@ import {
   addPost,
   setProfileThunkCreator,
   getStatusFromServer,
-  updateProfileState,
   updateStatusOnServer,
 } from "../../redux/profileReducer.js";
 import Profile from "./Profile";
@@ -18,15 +17,16 @@ class ProfileContainer extends React.Component {
     this.props.setProfileThunkCreator(userId);
     this.props.getStatusFromServer(userId); // в стор пишем полученное с сервера значение статуса
   }
-
+  onSubmit(message, dispatch) {
+    dispatch(addPost(message.newMessage));
+  }
   render() {
-    return <Profile {...this.props} />;
+    return <Profile {...this.props} onSubmit={this.onSubmit} />;
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    profileInputState: state.profilePage.profileInputText,
     posts: state.profilePage.posts,
     profileData: state.profilePage.profileData,
     isAuthed: state.auth.authorized,
@@ -38,7 +38,6 @@ const mapStateToProps = (state) => {
 export default compose(
   connect(mapStateToProps, {
     addPost,
-    updateProfileState,
     setProfileThunkCreator,
     getStatusFromServer,
     updateStatusOnServer,

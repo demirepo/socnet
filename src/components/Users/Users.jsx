@@ -1,5 +1,5 @@
 import s from "./Users.module.css";
-import Spinner from "../Spinner/Spinner";
+import Spinner from "../common/Spinner/Spinner";
 import { NavLink } from "react-router-dom";
 import FollowButton from "./FollowButton";
 
