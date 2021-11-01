@@ -9,11 +9,11 @@ import {
   updateStatusOnServer,
 } from "../../redux/profileReducer.js";
 import Profile from "./Profile";
-// import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    let userId = this.props.match.params.userId || 19090;
+    let userId = this.props.match.params.userId || this.props.authorizedUserId;
     this.props.setProfileThunkCreator(userId);
     this.props.getStatusFromServer(userId); // в стор пишем полученное с сервера значение статуса
   }
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
     profileData: state.profilePage.profileData,
     isAuthed: state.auth.authorized,
     statusText: state.profilePage.statusText,
-    currentUserId: state.auth.id,
+    authorizedUserId: state.auth.id,
   };
 };
 
@@ -42,6 +42,6 @@ export default compose(
     getStatusFromServer,
     updateStatusOnServer,
   }),
-  withRouter
-  // withAuthRedirect
+  withRouter,
+  withAuthRedirect
 )(ProfileContainer);
