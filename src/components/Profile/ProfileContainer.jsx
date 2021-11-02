@@ -10,6 +10,13 @@ import {
 } from "../../redux/profileReducer.js";
 import Profile from "./Profile";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import {
+  getIsAuthed,
+  getProfileData,
+  getStatusText,
+  getAuthorizedUserId,
+  getPostsReselector,
+} from "../../redux/selectors";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
@@ -27,11 +34,11 @@ class ProfileContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.profilePage.posts,
-    profileData: state.profilePage.profileData,
-    isAuthed: state.auth.authorized,
-    statusText: state.profilePage.statusText,
-    authorizedUserId: state.auth.id,
+    posts: getPostsReselector(state),
+    profileData: getProfileData(state),
+    isAuthed: getIsAuthed(state),
+    statusText: getStatusText(state),
+    authorizedUserId: getAuthorizedUserId(state),
   };
 };
 
