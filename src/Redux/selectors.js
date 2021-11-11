@@ -16,7 +16,7 @@ export const getIsAuthed = (state) => {
 };
 
 export const getStatusText = (state) => {
-  return state.profilePage.statusText;
+  return state.profilePage.statusText; //?
 };
 
 export const getAuthorizedUserId = (state) => {

@@ -3,7 +3,6 @@ import s from "./Profile.module.css";
 
 export class Status extends Component {
   state = { isStatusInputVisible: false, statusText: this.props.statusText };
-
   showStatusInput() {
     this.setState({
       isStatusInputVisible: true,
