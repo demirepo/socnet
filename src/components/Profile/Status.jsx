@@ -1,44 +1,47 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import s from "./Profile.module.css";
 
-export class Status extends Component {
-  state = { isStatusInputVisible: false, statusText: this.props.statusText };
-  showStatusInput() {
-    this.setState({
-      isStatusInputVisible: true,
-      statusText: this.props.statusText,
-    });
-  }
+export default function Status(props) {
+  const [showInput, setShowInput] = useState(false);
+  const [statusText, setStatusText] = useState(props.statusText);
 
-  hideStatusInput() {
-    this.setState({ isStatusInputVisible: false });
-    this.props.updateStatusOnServer(this.state.statusText);
-  }
+  // useEffect(() => {
+  //   getStatusFromServer(props.authorizedUserId);
+  // }, [props.authorizedUserId]);
 
-  onStatusChange(e) {
-    this.setState({ statusText: e.target.value });
-  }
+  const showStatusInput = () => {
+    setShowInput(true);
+    setStatusText(props.statusText);
+  };
 
-  render() {
-    return (
-      <div className={s.statusBox}>
-        {this.state.isStatusInputVisible ? (
-          <input
-            onChange={this.onStatusChange.bind(this)}
-            className={s.statusInput}
-            autoFocus={true}
-            type="text"
-            value={this.state.statusText}
-            onBlur={this.hideStatusInput.bind(this)}
-          />
-        ) : (
-          <span onDoubleClick={this.showStatusInput.bind(this)}>
-            {this.props.statusText || ""}
-          </span>
-        )}
-      </div>
-    );
-  }
+  const hideStatusInput = () => {
+    setShowInput(false);
+    props.updateStatusOnServer(statusText);
+  };
+
+  const onInputChange = (e) => {
+    setStatusText(e.target.value);
+  };
+
+  const onEnter = (e) => {
+    e.key === "Enter" && hideStatusInput();
+  };
+
+  return (
+    <div className={s.statusBox}>
+      {showInput ? (
+        <input
+          onChange={onInputChange}
+          onKeyDown={onEnter}
+          className={s.statusInput}
+          autoFocus={true}
+          type="text"
+          value={statusText}
+          onBlur={hideStatusInput}
+        />
+      ) : (
+        <span onDoubleClick={showStatusInput}>{props.statusText || ""}</span>
+      )}
+    </div>
+  );
 }
-
-export default Status;

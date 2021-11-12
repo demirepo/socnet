@@ -27,7 +27,7 @@ export default function User(props) {
   return (
     // rendering loading spinner
     <div>
-      {props.inProgress && <Spinner />}
+      {props.isFetching && <Spinner />}
       {/* rendering select, that controlls page size*/}
       <div className={s.select}>
         Результатов на странице:&nbsp;
@@ -54,7 +54,7 @@ export default function User(props) {
             <div className={s.info}>
               <p className={s.name}>{user.name}</p>
               <FollowButton
-                followButtonIsDisabled={props.followButtonIsDisabled}
+                disabledFollowButtonList={props.disabledFollowButtonList}
                 user={user}
                 toggleFollow={props.toggleFollow}
               />

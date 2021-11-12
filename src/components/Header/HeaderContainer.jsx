@@ -1,11 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  setUserAuthData,
-  authMeThunkCreator,
-  logoutThunk,
-} from "../../redux/authReducer";
+import { logoutThunk } from "../../redux/authReducer";
 import Header from "./Header";
+import { getIsAuthorized, getLogin } from "../../redux/authSelectors";
 
 class HeaderContainer extends React.Component {
   render() {
@@ -16,12 +13,11 @@ class HeaderContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth,
+    isAuthorized: getIsAuthorized(state),
+    login: getLogin(state),
   };
 };
 
 export default connect(mapStateToProps, {
-  setUserAuthData,
-  authMeThunkCreator,
   logoutThunk,
 })(HeaderContainer);

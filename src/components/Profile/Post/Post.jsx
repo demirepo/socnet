@@ -5,8 +5,9 @@ export default function Post(props) {
     <div className={s.post}>
       <img
         className={s.image}
-        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-        alt="pixel"
+        src="img/ava-blue.jpg"
+        // src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+        alt="avatar"
       />
       <div className={s.message}>
         {props.text}

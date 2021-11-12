@@ -4,13 +4,22 @@ import {
   toggleFollow,
   setCurrentPage,
   setPageSize,
-  setInProgress,
+  setIsFetching,
   toggleDisableFollowButton,
   getUsersThunkCreator,
   toggleFollowThunkCreator,
 } from "../../redux/usersReducer";
 import React from "react";
 import Users from "./Users";
+import {
+  getUsers,
+  getPageSize,
+  getTotalUsersCount,
+  getCurrentPage,
+  getPagesCount,
+  getisFetching,
+  getdisabledFollowButtonList,
+} from "../../redux/userSelectors";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
@@ -42,11 +51,11 @@ class UsersContainer extends React.Component {
         totalUsersCount={this.props.totalUsersCount}
         currentPage={this.props.currentPage}
         pagesCount={this.props.pagesCount}
+        isFetching={this.props.isFetching}
+        disabledFollowButtonList={this.props.disabledFollowButtonList}
         setPageSize={this.setPageSize}
         toggleFollow={this.toggleFollow}
         setCurrentPage={this.setCurrentPage}
-        inProgress={this.props.inProgress}
-        followButtonIsDisabled={this.props.followButtonIsDisabled}
       />
     );
   }
@@ -54,32 +63,22 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage,
-    pagesCount: state.usersPage.pagesCount,
-    state: state.usersPage,
-    inProgress: state.usersPage.inProgress,
-    followButtonIsDisabled: state.usersPage.followButtonIsDisabled,
+    users: getUsers(state),
+    pageSize: getPageSize(state),
+    totalUsersCount: getTotalUsersCount(state),
+    currentPage: getCurrentPage(state),
+    pagesCount: getPagesCount(state),
+    isFetching: getisFetching(state),
+    disabledFollowButtonList: getdisabledFollowButtonList(state),
   };
 };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     setUsers: (users) => dispatch(setUsersAC(users)),
-//     toggleFollow: (userId) => dispatch(toggleFollowAC(userId)),
-//     setCurrentPage: (currentPage) => dispatch(setCurrentPageAC(currentPage)),
-//     setPageSize: (pageSize) => dispatch(setPageSizeAC(pageSize)),
-//   };
-// };
 
 export default connect(mapStateToProps, {
   setUsers,
   toggleFollow,
   setCurrentPage,
   setPageSize,
-  setInProgress,
+  setIsFetching,
   toggleDisableFollowButton,
   getUsersThunkCreator,
   toggleFollowThunkCreator,

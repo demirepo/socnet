@@ -14,9 +14,9 @@
   width: 50px;
   height: 50px;
   margin-right: 10px;
-  background-image: url(https://i.ytimg.com/vi/8gt4g4DDyYg/maxresdefault.jpg);
+  /* background-image: url(/src/dist/);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
 }
 
 .message {

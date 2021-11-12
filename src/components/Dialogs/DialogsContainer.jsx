@@ -2,6 +2,7 @@ import { postMessageActionCreator } from "../../redux/dialogReducer";
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
 import { change } from "redux-form";
+import { getDialogs, getMessages } from "../../redux/dialogSelectors";
 
 const DialogsContainer = (props) => {
   const onSubmit = (dialogInputObj) => {
@@ -15,9 +16,8 @@ const DialogsContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    dialogs: state.messagesPage.dialogs,
-    messages: state.messagesPage.messages,
-    // dialogInputText: state.messagesPage.dialogInputText,
+    dialogs: getDialogs(state),
+    messages: getMessages(state),
   };
 };
 

@@ -5,7 +5,7 @@ const SHOW_MORE = "showMore";
 const SET_USERS = "setUsers";
 const SET_CURRENT_PAGE = "setCurrentPage";
 const SET_PAGE_SIZE = "setPageSize";
-const SET_IN_PROGRESS = "setInProgress";
+const SET_IN_PROGRESS = "setisFetching";
 const TOGGLE_DISABLE_FOLLOW_BUTTON = "toggleDisableFollowButton";
 //===================== INITIAL STATE ============================
 
@@ -15,8 +15,8 @@ const initialState = {
   totalUsersCount: 0,
   currentPage: 1,
   pagesCount: 1,
-  inProgress: false,
-  followButtonIsDisabled: [],
+  isFetching: false,
+  disabledFollowButtonList: [],
 };
 //===================== REDUCER ============================
 
@@ -55,15 +55,15 @@ export default function usersReducer(state = initialState, action) {
       return { ...state, pageSize: +action.pageSize };
 
     case SET_IN_PROGRESS:
-      return { ...state, inProgress: action.inProgress };
+      return { ...state, isFetching: action.isFetching };
 
     case TOGGLE_DISABLE_FOLLOW_BUTTON:
-      const newVal = state.followButtonIsDisabled.includes(action.userId)
-        ? state.followButtonIsDisabled.filter((id) => id !== action.userId)
-        : [...state.followButtonIsDisabled, action.userId];
+      const newVal = state.disabledFollowButtonList.includes(action.userId)
+        ? state.disabledFollowButtonList.filter((id) => id !== action.userId)
+        : [...state.disabledFollowButtonList, action.userId];
       return {
         ...state,
-        followButtonIsDisabled: newVal,
+        disabledFollowButtonList: newVal,
       };
 
     default:
@@ -88,8 +88,8 @@ export function setCurrentPage(currentPage) {
 export function setPageSize(pageSize) {
   return { type: SET_PAGE_SIZE, pageSize: pageSize };
 }
-export function setInProgress(inProgress) {
-  return { type: SET_IN_PROGRESS, inProgress: inProgress };
+export function setIsFetching(isFetching) {
+  return { type: SET_IN_PROGRESS, isFetching: isFetching };
 }
 export function toggleDisableFollowButton(userId) {
   return {
@@ -100,10 +100,10 @@ export function toggleDisableFollowButton(userId) {
 //===================== THUNK CREATORS ============================
 export function getUsersThunkCreator(currentPage, pageSize) {
   return (dispatch) => {
-    dispatch(setInProgress(true));
+    dispatch(setIsFetching(true));
     usersAPI.getUsers(currentPage, pageSize).then((response) => {
       dispatch(setUsers(response));
-      dispatch(setInProgress(false));
+      dispatch(setIsFetching(false));
     });
   };
 }

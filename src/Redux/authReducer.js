@@ -8,8 +8,8 @@ const initialState = {
   id: null,
   login: null,
   email: null,
-  authorized: false,
-  inProgress: false,
+  isAuthorized: false,
+  isFetching: false,
 };
 
 //===================== REDUCER ============================
@@ -21,7 +21,7 @@ export default function authReducer(state = initialState, action) {
       return { ...state, ...action.authData };
 
     case SET_AUTH_IN_PROGRESS:
-      return { ...state, inProgress: action.inProgress };
+      return { ...state, isFetching: action.isFetching };
 
     default:
       return state;
@@ -29,17 +29,17 @@ export default function authReducer(state = initialState, action) {
 }
 //===================== ACTION CREATORS ============================
 
-export function setUserAuthData(id, login, email, authorized) {
+export function setUserAuthData(id, login, email, isAuthorized) {
   return {
     type: SET_USER_AUTH_DATA,
-    authData: { id, login, email, authorized },
+    authData: { id, login, email, isAuthorized },
   };
 }
 
-export function setAuthInProgress(inProgress) {
+export function setAuthisFetching(isFetching) {
   return {
     type: SET_AUTH_IN_PROGRESS,
-    inProgress,
+    isFetching,
   };
 }
 
@@ -48,41 +48,37 @@ export function setAuthInProgress(inProgress) {
 export function authMeThunkCreator() {
   return (dispatch) => {
     return authAPI.authMe().then((response) => {
-      if (response.status === 200) {
-        if (response.data.resultCode === 0) {
-          let { id, login, email } = response.data.data;
-          let authorized = true;
-          dispatch(setUserAuthData(id, login, email, authorized));
-        }
-      } else {
+      if (response.status !== 200)
         console.log("Ошибка сервера:", response.status);
+      if (response.data.resultCode === 0) {
+        const { id, login, email } = response.data.data;
+        const isAuthorized = true;
+        dispatch(setUserAuthData(id, login, email, isAuthorized));
       }
     });
   };
 }
 
 export function loginThunk(credentials) {
-  return (dispatch) => {
-    authAPI.login(credentials).then((response) => {
-      if (response.data.resultCode === 0) {
-        dispatch(authMeThunkCreator());
-        console.log("Логин прошел удачно");
-      } else {
-        console.log(response.data.messages);
-      }
-    });
+  return async (dispatch) => {
+    let response = await authAPI.login(credentials);
+    if (response.data.resultCode === 0) {
+      await dispatch(authMeThunkCreator());
+      console.log("Логин прошел удачно");
+    } else {
+      console.log(response.data.messages);
+    }
   };
 }
 
 export function logoutThunk() {
-  return (dispatch) => {
-    authAPI.logout().then((response) => {
-      if (response.data.resultCode === 0) {
-        dispatch(setUserAuthData(null, null, null, false));
-        console.log("Вы вышли из системы");
-      } else {
-        console.log(response.data.messages);
-      }
-    });
+  return async (dispatch) => {
+    let response = await authAPI.logout();
+    if (response.data.resultCode === 0) {
+      dispatch(setUserAuthData(null, null, null, false));
+      console.log("Вы вышли из системы");
+    } else {
+      console.log(response.data.messages);
+    }
   };
 }

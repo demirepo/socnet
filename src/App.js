@@ -1,50 +1,47 @@
+import React, { useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
+import Spinner from "./components/common/Spinner/Spinner.jsx";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/Login/Login";
 import Music from "./components/Music/Music";
-import Nav from "./components/Nav/Nav";
 import News from "./components/News/News";
 import ProfileContainer from "./components/Profile/ProfileContainer";
-import Settings from "./components/Settings/Settings";
 import UsersContainer from "./components/Users/UsersContainer";
-import Login from "./components/Login/Login";
-import React from "react";
-import { connect } from "react-redux";
-import Spinner from "./components/common/Spinner/Spinner.jsx";
 import { initializeApp } from "./redux/appReducer ";
+import Nav from "./components/Nav/Nav";
+import Settings from "./components/Settings/Settings";
+import { connect } from "react-redux";
+import { getIsInitialized } from "./redux/appSelector";
 
-class App extends React.Component {
-  componentDidMount() {
-    this.props.initializeApp();
-  }
-  render() {
-    if (!this.props.initialized) return <Spinner />;
+function App(props) {
+  useEffect(() => {
+    props.initializeApp();
+  });
 
-    return (
-      <BrowserRouter>
-        <div className="wrapper">
-          <HeaderContainer />
-          <Nav />
-          <div className="wrapper-content">
-            <Route
-              path="/profile/:userId?"
-              render={() => <ProfileContainer />}
-            />
-            <Route path="/dialogs" render={() => <DialogsContainer />} />
-            <Route path="/users" render={() => <UsersContainer />} />
-            <Route path="/news" component={News} />
-            <Route path="/music" component={Music} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/login" component={Login} />
-          </div>
+  if (!props.isInitialized) return <Spinner />;
+
+  return (
+    <BrowserRouter>
+      <div className="wrapper">
+        <HeaderContainer />
+        <Nav />
+        <div className="wrapper-content">
+          <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+          <Route path="/dialogs" render={() => <DialogsContainer />} />
+          <Route path="/users" render={() => <UsersContainer />} />
+          <Route path="/news" component={News} />
+          <Route path="/music" component={Music} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/login" component={Login} />
         </div>
-      </BrowserRouter>
-    );
-  }
+      </div>
+    </BrowserRouter>
+  );
 }
 
-const mapStateToProps = (state) => ({ initialized: state.app.initialized });
+const mapStateToProps = (state) => ({ isInitialized: getIsInitialized(state) });
 
 export default connect(mapStateToProps, {
   initializeApp,

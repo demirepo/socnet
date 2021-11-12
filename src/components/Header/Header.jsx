@@ -6,10 +6,10 @@ export default function Header(props) {
   return (
     <header className={s.header}>
       <img src="/img/logo.png" alt="logo"></img>
-      {props.auth.authorized ? (
+      {props.isAuthorized ? (
         <div className={s.login}>
           <img width="10" height="10" src="/img/ava-blue.jpg" alt="" />
-          {props.auth.login}
+          {props.login}
           <button className={s.button} onClick={props.logoutThunk}>
             Logout
           </button>

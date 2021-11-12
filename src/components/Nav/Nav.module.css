@@ -1,6 +1,6 @@
 .navbar {
   grid-area: n;
-  background-color: green;
+  background-color: hsl(200, 45%, 61%);
 }
 
 .navbar__item {

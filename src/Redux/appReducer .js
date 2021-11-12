@@ -1,10 +1,10 @@
 import { authMeThunkCreator } from "./authReducer";
-const SET_INITIALIZED = "setInitialized";
+const SET_IS_INITIALIZED = "setIsInitialized";
 
 //===================== INITIAL STATE ============================
 
 const initialState = {
-  initialized: false,
+  isInitialized: false,
 };
 
 //===================== REDUCER ============================
@@ -12,8 +12,8 @@ const initialState = {
 export default function appReducer(state = initialState, action) {
   switch (action.type) {
     //======================================
-    case SET_INITIALIZED:
-      return { ...state, initialized: true };
+    case SET_IS_INITIALIZED:
+      return { ...state, isInitialized: true };
 
     default:
       return state;
@@ -21,19 +21,17 @@ export default function appReducer(state = initialState, action) {
 }
 //===================== ACTION CREATORS ============================
 
-export function setInitialized() {
+export function setIsInitialized() {
   return {
-    type: SET_INITIALIZED,
+    type: SET_IS_INITIALIZED,
   };
 }
 
 //============================THUNKS=====================================
 
 export function initializeApp() {
-  return (dispatch) => {
-    const promise = dispatch(authMeThunkCreator());
-    promise.then(() => {
-      dispatch(setInitialized());
-    });
+  return async (dispatch) => {
+    await dispatch(authMeThunkCreator());
+    await dispatch(setIsInitialized());
   };
 }

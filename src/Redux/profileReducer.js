@@ -12,7 +12,6 @@ const initialState = {
     { id: 2, text: "какой-то текст поста №2", likes: 44 },
     { id: 3, text: "какой-то текст поста №3", likes: 5 },
   ],
-  profileInputText: "",
   profileData: {},
   statusText: "some status",
 };
@@ -58,27 +57,25 @@ export function setStatus(statusText) {
 }
 
 export function setProfileThunkCreator(userId) {
-  return (dispatch) => {
-    usersAPI.getProfile(userId).then((response) => {
-      dispatch(setProfileData(response.data));
-    });
+  return async (dispatch) => {
+    let response = await usersAPI.getProfile(userId);
+    dispatch(setProfileData(response.data));
   };
 }
 
 export function getStatusFromServer(userId) {
-  return (dispatch) => {
-    profileAPI.getStatus(userId).then((response) => {
-      dispatch(setStatus(response.data));
-    });
+  return async (dispatch) => {
+    let response = await profileAPI.getStatus(userId);
+    dispatch(setStatus(response.data));
   };
 }
 
 export function updateStatusOnServer(statusText) {
-  return (dispatch) => {
-    profileAPI.updateStatus(statusText).then((response) => {
-      if (response.data.resultCode === 0) {
-        dispatch(setStatus(statusText));
-      }
-    });
+  return async (dispatch) => {
+    let response = await profileAPI.updateStatus(statusText);
+    console.log(response);
+    response.data.resultCode === 0
+      ? dispatch(setStatus(statusText))
+      : console.log("Error during status update");
   };
 }
