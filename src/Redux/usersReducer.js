@@ -1,12 +1,12 @@
 import { usersAPI } from "../api/api";
 
-const TOGGLE_FOLLOW = "toggleFollow";
-const SHOW_MORE = "showMore";
-const SET_USERS = "setUsers";
-const SET_CURRENT_PAGE = "setCurrentPage";
-const SET_PAGE_SIZE = "setPageSize";
-const SET_IN_PROGRESS = "setisFetching";
-const TOGGLE_DISABLE_FOLLOW_BUTTON = "toggleDisableFollowButton";
+const TOGGLE_FOLLOW = "my-react/users/toggleFollow";
+const SHOW_MORE = "my-react/users/showMore";
+const SET_USERS = "my-react/users/setUsers";
+const SET_CURRENT_PAGE = "my-react/users/setCurrentPage";
+const SET_PAGE_SIZE = "my-react/users/setPageSize";
+const SET_IN_PROGRESS = "my-react/users/setisFetching";
+const TOGGLE_DISABLE_FOLLOW_BUTTON = "my-react/users/toggleDisableFollowButton";
 //===================== INITIAL STATE ============================
 
 const initialState = {
@@ -74,22 +74,22 @@ export default function usersReducer(state = initialState, action) {
 //===================== ACTION CREATORS ============================
 
 export function toggleFollow(userId) {
-  return { type: TOGGLE_FOLLOW, userId }; // значение userId присваивается автоматически называемому ключу userId
+  return { type: TOGGLE_FOLLOW, userId };
 }
 export function showMore() {
   return { type: SHOW_MORE };
 }
 export function setUsers(data) {
-  return { type: SET_USERS, data: data };
+  return { type: SET_USERS, data };
 }
 export function setCurrentPage(currentPage) {
   return { type: SET_CURRENT_PAGE, currentPage: currentPage };
 }
 export function setPageSize(pageSize) {
-  return { type: SET_PAGE_SIZE, pageSize: pageSize };
+  return { type: SET_PAGE_SIZE, pageSize };
 }
 export function setIsFetching(isFetching) {
-  return { type: SET_IN_PROGRESS, isFetching: isFetching };
+  return { type: SET_IN_PROGRESS, isFetching };
 }
 export function toggleDisableFollowButton(userId) {
   return {
@@ -109,26 +109,22 @@ export function getUsersThunkCreator(currentPage, pageSize) {
 }
 
 export function toggleFollowThunkCreator(userId) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       usersPage: { users },
     } = getState();
     let isUserFollowed = users.filter((u) => u.id === userId)[0].followed;
     dispatch(toggleDisableFollowButton(userId)); // disabling button during query
-    if (isUserFollowed) {
-      usersAPI.unfollowUser(userId).then((response) => {
-        if (response.data.resultCode === 0) {
-          dispatch(toggleFollow(userId));
-          dispatch(toggleDisableFollowButton(userId));
-        }
-      });
-    } else {
-      usersAPI.followUser(userId).then((response) => {
-        if (response.data.resultCode === 0) {
-          dispatch(toggleFollow(userId));
-          dispatch(toggleDisableFollowButton(userId));
-        }
-      });
+
+    async function manageSubscription(subscriptionAction) {
+      const response = await subscriptionAction;
+      if (response.data.resultCode === 0) {
+        dispatch(toggleFollow(userId));
+        dispatch(toggleDisableFollowButton(userId));
+      }
     }
+    isUserFollowed
+      ? manageSubscription(usersAPI.unfollowUser(userId))
+      : manageSubscription(usersAPI.followUser(userId));
   };
 }

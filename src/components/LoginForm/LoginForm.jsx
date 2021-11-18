@@ -4,9 +4,9 @@ import { Input } from "../common/FormControls/FormControls";
 import validator from "../../utils/validation";
 
 const min8 = validator.minLength(8);
-function LoginForm(props) {
+function LoginForm({ handleSubmit }) {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Field
         placeholder={"login"}
         name={"login"}

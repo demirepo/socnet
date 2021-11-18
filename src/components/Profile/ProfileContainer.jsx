@@ -30,7 +30,15 @@ class ProfileContainer extends React.Component {
     dispatch(addPost(message.newMessage));
   }
   render() {
-    return <Profile {...this.props} onSubmit={this.onSubmit} />;
+    return (
+      <Profile
+        onSubmit={this.onSubmit}
+        updateStatusOnServer={updateStatusOnServer}
+        statusText={this.props.statusText}
+        profileData={this.props.profileData}
+        posts={this.props.posts}
+      />
+    );
   }
 }
 

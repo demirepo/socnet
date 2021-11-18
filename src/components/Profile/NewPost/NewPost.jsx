@@ -2,10 +2,10 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import s from "./NewPost.module.css";
 
-function NewPost(props) {
+function NewPost({ handleSubmit }) {
   return (
     <div className={s.newPost}>
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <fieldset>
             <legend>&nbsp;Новый пост&nbsp;</legend>

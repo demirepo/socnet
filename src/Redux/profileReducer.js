@@ -1,8 +1,8 @@
 import { usersAPI, profileAPI } from "../api/api";
 
-const ADD_POST = "addPost";
-const SET_PROFILE_DATA = "setProfileData";
-const SET_STATUS = "setStatus";
+const ADD_POST = "my-react/profile/addPost";
+const SET_PROFILE_DATA = "my-react/profile/setProfileData";
+const SET_STATUS = "my-react/profile/setStatus";
 
 //===================== INITIAL STATE ============================
 

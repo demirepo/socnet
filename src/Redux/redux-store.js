@@ -16,11 +16,18 @@ let reducers = combineReducers({
   app: appReducer,
 });
 
-const composeEnhancers =
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-    trace: true,
-    traceLimit: 25,
-  }) || compose;
+let composeEnhancers;
+
+if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+  composeEnhancers =
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      trace: true,
+      traceLimit: 25,
+    }) || compose;
+} else {
+  composeEnhancers = compose;
+}
+
 let store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
 export default store;

@@ -29,7 +29,7 @@ function App(props) {
         <Nav />
         <div className="wrapper-content">
           <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-          <Route path="/dialogs" render={() => <DialogsContainer />} />
+          <Route path="/dialogs" component={DialogsContainer} />
           <Route path="/users" render={() => <UsersContainer />} />
           <Route path="/news" component={News} />
           <Route path="/music" component={Music} />

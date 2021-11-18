@@ -1,6 +1,6 @@
 import { authAPI } from "../api/api";
-const SET_USER_AUTH_DATA = "setUserAuthData";
-const SET_AUTH_IN_PROGRESS = "setAuthInProgress";
+const SET_USER_AUTH_DATA = "my-react/auth/setUserAuthData";
+const SET_AUTH_IN_PROGRESS = "my-react/auth/setAuthInProgress";
 
 //===================== INITIAL STATE ============================
 

@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import s from "./Profile.module.css";
 
-export default function Status(props) {
+export default function Status({
+  updateStatusOnServer,
+  statusText: propsStatusText,
+}) {
   const [showInput, setShowInput] = useState(false);
-  const [statusText, setStatusText] = useState(props.statusText);
-
-  // useEffect(() => {
-  //   getStatusFromServer(props.authorizedUserId);
-  // }, [props.authorizedUserId]);
+  const [statusText, setStatusText] = useState(propsStatusText);
 
   const showStatusInput = () => {
     setShowInput(true);
-    setStatusText(props.statusText);
+    setStatusText(propsStatusText);
   };
 
   const hideStatusInput = () => {
     setShowInput(false);
-    props.updateStatusOnServer(statusText);
+    updateStatusOnServer(statusText);
   };
 
   const onInputChange = (e) => {
@@ -40,7 +39,7 @@ export default function Status(props) {
           onBlur={hideStatusInput}
         />
       ) : (
-        <span onDoubleClick={showStatusInput}>{props.statusText || ""}</span>
+        <span onDoubleClick={showStatusInput}>{propsStatusText || " "}</span>
       )}
     </div>
   );

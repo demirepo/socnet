@@ -5,16 +5,16 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import { getIsAuthorized } from "../../redux/authSelectors";
 
-function Login(props) {
+function Login({ isAuthed, login }) {
   const onSubmit = (data) => {
     const credentials = {
       email: data.login,
       password: data.password,
       rememberMe: data.rememberMe,
     };
-    props.login(credentials);
+    login(credentials);
   };
-  if (props.isAuthed) return <Redirect to={"/profile"} />;
+  if (isAuthed) return <Redirect to={"/profile"} />;
 
   return (
     <div>

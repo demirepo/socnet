@@ -1,4 +1,4 @@
-const POST_MESSAGE = "postMessage";
+const POST_MESSAGE = "my-react/dialog/postMessage";
 
 //===================== INITIAL STATE ============================
 
@@ -69,6 +69,6 @@ export default function dialogReducer(state = initialState, action) {
 }
 //===================== ACTION CREATORS ============================
 
-export function postMessageActionCreator(dialogInput) {
+export function postMessage(dialogInput) {
   return { type: POST_MESSAGE, dialogInput };
 }

@@ -23,9 +23,7 @@ export default function UserInfo(props) {
       <div className={s.text}>О себе: {props.data.aboutMe}</div>
       <div className={s.text}>{contactsItems}</div>
       <div className={s.text}>
-        {props.data.lookingForAJob
-          ? "В поисках работы"
-          : "Трудоустроен, работу не ищу"}
+        {props.data.lookingForAJob ? "Ищу работу" : "Работу не ищу"}
       </div>
       <div className={s.text}>
         Какую работу ищу:{props.data.lookingForAJobDescription}

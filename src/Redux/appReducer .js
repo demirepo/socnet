@@ -1,5 +1,5 @@
 import { authMeThunkCreator } from "./authReducer";
-const SET_IS_INITIALIZED = "setIsInitialized";
+const SET_IS_INITIALIZED = "my-react/app/setIsInitialized";
 
 //===================== INITIAL STATE ============================
 

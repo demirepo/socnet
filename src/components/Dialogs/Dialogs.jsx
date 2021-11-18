@@ -6,12 +6,12 @@ import Messages from "./Messages/Messages";
 import validator from "../../utils/validation";
 import { Textarea } from "../common/FormControls/FormControls";
 
-export default function Dialogs(props) {
-  const dialogItemsList = props.dialogs.map((d) => (
+export default function Dialogs({ dialogs, messages, onSubmit }) {
+  const dialogItemsList = dialogs.map((d) => (
     <DialogItem key={d.id} id={d.id} name={d.name} path={d.avatarPath} />
   ));
 
-  const messageList = props.messages.userId1.map((m) => {
+  const messageList = messages.userId1.map((m) => {
     const sideClass = m.author === "me" ? "flexLeft" : "flexRight";
     return <Messages key={m.id} side={sideClass} text={m.text} />;
   });
@@ -22,7 +22,7 @@ export default function Dialogs(props) {
         <ul className={s.dialogs}>{dialogItemsList}</ul>
         <div className={s.messages}>{messageList}</div>
       </div>
-      <DialogInputReduxForm onSubmit={props.onSubmit} />
+      <DialogInputReduxForm onSubmit={onSubmit} />
     </>
   );
 }
