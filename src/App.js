@@ -46,3 +46,4 @@ const mapStateToProps = (state) => ({ isInitialized: getIsInitialized(state) });
 export default connect(mapStateToProps, {
   initializeApp,
 })(App);
+//test
