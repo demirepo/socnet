@@ -3,7 +3,6 @@ import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import Spinner from "./components/common/Spinner/Spinner.jsx";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
@@ -12,25 +11,28 @@ import UsersContainer from "./components/Users/UsersContainer";
 import { initializeApp } from "./redux/appReducer ";
 import Nav from "./components/Nav/Nav";
 import Settings from "./components/Settings/Settings";
-import { connect } from "react-redux";
-import { getIsInitialized } from "./redux/appSelector";
+import Header from "./components/Header/Header";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-function App(props) {
-  useEffect(() => {
-    props.initializeApp();
-  });
+export default function App() {
+  console.log("render");
+  const dispatch = useDispatch();
+  const isInit = useSelector((state) => state.app.isInitialized);
 
-  if (!props.isInitialized) return <Spinner />;
+  useEffect(() => dispatch(initializeApp()), [dispatch]);
+
+  if (!isInit) return <Spinner />;
 
   return (
     <BrowserRouter>
       <div className="wrapper">
-        <HeaderContainer />
+        <Header />
         <Nav />
         <div className="wrapper-content">
-          <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+          <Route path="/profile/:userId?" component={ProfileContainer} />
           <Route path="/dialogs" component={DialogsContainer} />
-          <Route path="/users" render={() => <UsersContainer />} />
+          <Route path="/users" component={UsersContainer} />
           <Route path="/news" component={News} />
           <Route path="/music" component={Music} />
           <Route path="/settings" component={Settings} />
@@ -40,10 +42,3 @@ function App(props) {
     </BrowserRouter>
   );
 }
-
-const mapStateToProps = (state) => ({ isInitialized: getIsInitialized(state) });
-
-export default connect(mapStateToProps, {
-  initializeApp,
-})(App);
-//test

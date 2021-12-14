@@ -48,8 +48,7 @@ export function setAuthisFetching(isFetching) {
 export function authMeThunkCreator() {
   return (dispatch) => {
     return authAPI.authMe().then((response) => {
-      if (response.status !== 200)
-        console.log("Ошибка сервера:", response.status);
+      if (response.status !== 200) console.log("Server error", response.status);
       if (response.data.resultCode === 0) {
         const { id, login, email } = response.data.data;
         const isAuthorized = true;
@@ -64,7 +63,7 @@ export function loginThunk(credentials) {
     let response = await authAPI.login(credentials);
     if (response.data.resultCode === 0) {
       await dispatch(authMeThunkCreator());
-      console.log("Логин прошел удачно");
+      console.log("Login successful");
     } else {
       console.log(response.data.messages);
     }
@@ -76,7 +75,7 @@ export function logoutThunk() {
     let response = await authAPI.logout();
     if (response.data.resultCode === 0) {
       dispatch(setUserAuthData(null, null, null, false));
-      console.log("Вы вышли из системы");
+      console.log("You have logged out");
     } else {
       console.log(response.data.messages);
     }

@@ -33,13 +33,13 @@ const DialogInput = (props) => {
     <form onSubmit={props.handleSubmit}>
       <Field
         component={Textarea}
-        placeholder="Введите текст сообщения..."
+        placeholder="Input message text..."
         className={s.textArea}
         rows="8"
         name={"dialogInput"}
         validate={[max10]}
       />
-      <button className={s.button}>Отправить сообщение</button>
+      <button className={s.button}>Send message</button>
     </form>
   );
 };

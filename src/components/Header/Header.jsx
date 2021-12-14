@@ -1,16 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import s from "./Header.module.css";
+import { logoutThunk } from "../../redux/authReducer";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-export default function Header(props) {
+export default function Header() {
+  const dispatch = useDispatch();
+  const isAuthed = useSelector((state) => state.auth.isAuthorized);
+  const login = useSelector((state) => state.auth.login);
+  const logout = () => dispatch(logoutThunk());
+
   return (
     <header className={s.header}>
       <img src="/img/logo.png" alt="logo"></img>
-      {props.isAuthorized ? (
+      {isAuthed ? (
         <div className={s.login}>
-          <img width="10" height="10" src="/img/ava-blue.jpg" alt="" />
-          {props.login}
-          <button className={s.button} onClick={props.logoutThunk}>
+          <img className={s.miniavatar} src="/img/ava-blue.jpg" alt="ava" />
+          {login}
+          <button className={s.button} onClick={logout}>
             Logout
           </button>
         </div>

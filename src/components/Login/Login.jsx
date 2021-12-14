@@ -1,19 +1,23 @@
 import React from "react";
 import LoginForm from "../LoginForm/LoginForm";
 import { loginThunk } from "../../redux/authReducer";
-import { connect } from "react-redux";
 import { Redirect } from "react-router";
-import { getIsAuthorized } from "../../redux/authSelectors";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-function Login({ isAuthed, login }) {
+export default function Login() {
+  const isAuthed = useSelector((state) => state.auth.isAuthorized);
+  const dispatch = useDispatch();
+
   const onSubmit = (data) => {
     const credentials = {
       email: data.login,
       password: data.password,
       rememberMe: data.rememberMe,
     };
-    login(credentials);
+    dispatch(loginThunk(credentials));
   };
+
   if (isAuthed) return <Redirect to={"/profile"} />;
 
   return (
@@ -23,15 +27,3 @@ function Login({ isAuthed, login }) {
     </div>
   );
 }
-
-const mapStateToProps = (state) => {
-  return { isAuthed: getIsAuthorized(state) };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (credentials) => dispatch(loginThunk(credentials)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);

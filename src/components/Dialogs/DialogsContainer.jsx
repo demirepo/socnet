@@ -1,30 +1,20 @@
 import { postMessage } from "../../redux/dialogReducer";
 import Dialogs from "./Dialogs";
-import { connect } from "react-redux";
 import { change } from "redux-form";
-import { getDialogs, getMessages } from "../../redux/dialogSelectors";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-const DialogsContainer = ({ dialogs, messages, postTextArea, clearInput }) => {
-  const onSubmit = (input) => {
-    postTextArea(input.dialogInput);
-    clearInput();
+const DialogsContainer = () => {
+  const dispatch = useDispatch();
+  const dialogs = useSelector((state) => state.messagesPage.dialogs);
+  const messages = useSelector((state) => state.messagesPage.messages);
+
+  const onSubmit = (e) => {
+    dispatch(postMessage(e.dialogInput));
+    dispatch(change("dialogInput", "dialogInput", ""));
   };
 
   return <Dialogs messages={messages} dialogs={dialogs} onSubmit={onSubmit} />;
 };
 
-const mapStateToProps = (state) => {
-  return {
-    dialogs: getDialogs(state),
-    messages: getMessages(state),
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    postTextArea: (dialogInput) => dispatch(postMessage(dialogInput)),
-    clearInput: () => dispatch(change("dialogInput", "dialogInput", "")),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DialogsContainer);
+export default DialogsContainer;
