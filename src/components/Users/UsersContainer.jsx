@@ -3,22 +3,22 @@ import {
   setUsers,
   toggleFollow,
   setCurrentPage,
-  setPageSize,
   setIsFetching,
   toggleDisableFollowButton,
   getUsersThunkCreator,
   toggleFollowThunkCreator,
+  setPageSize,
 } from "../../redux/usersReducer";
 import React from "react";
 import Users from "./Users";
 import {
   getUsers,
-  getPageSize,
   getTotalUsersCount,
   getCurrentPage,
   getPagesCount,
   getisFetching,
   getdisabledFollowButtonList,
+  getPageSize,
 } from "../../redux/userSelectors";
 
 class UsersContainer extends React.Component {
@@ -63,8 +63,8 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: getUsers(state),
     pageSize: getPageSize(state),
+    users: getUsers(state),
     totalUsersCount: getTotalUsersCount(state),
     currentPage: getCurrentPage(state),
     pagesCount: getPagesCount(state),
@@ -75,9 +75,9 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   setUsers,
+  setPageSize,
   toggleFollow,
   setCurrentPage,
-  setPageSize,
   setIsFetching,
   toggleDisableFollowButton,
   getUsersThunkCreator,
