@@ -108,6 +108,7 @@ export default function Paginator({
           value={currentPageInput}
           onKeyDown={onEnter}
           onInput={handleInput}
+          onFocus={(e) => e.target.select()}
         />
 
         <div>{pages}</div>
