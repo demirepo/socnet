@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { HashRouter, Route } from "react-router-dom";
 import "./App.css";
 import Spinner from "./components/common/Spinner/Spinner.jsx";
 import Login from "./components/Login/Login";
@@ -20,7 +20,6 @@ const ProfileContainer = React.lazy(() =>
 );
 
 export default function App() {
-  console.log("render");
   const dispatch = useDispatch();
   const isInit = useSelector((state) => state.app.isInitialized);
 
@@ -29,7 +28,7 @@ export default function App() {
   if (!isInit) return <Spinner />;
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="wrapper">
         <Header />
         <Nav />
@@ -45,6 +44,6 @@ export default function App() {
           </Suspense>
         </div>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }

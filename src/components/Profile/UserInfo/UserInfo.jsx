@@ -1,7 +1,9 @@
 import s from "./UserInfo.module.css";
 
-export default function UserInfo(props) {
+export default function UserInfo({ updateAvatar, ...props }) {
   let contacts = props.data.contacts ? Object.keys(props.data.contacts) : [];
+  const isOwner = props.data.userId === props.authorizedUserId;
+
   const contactsItems = contacts.map((m) => {
     return (
       <div key={m}>
@@ -12,13 +14,19 @@ export default function UserInfo(props) {
       </div>
     );
   });
+
+  const onAvatarUpload = (e) => {
+    updateAvatar(e.target.files[0]);
+  };
+
   return (
     <div className={s.userinfo}>
       <img
         className={s.avatar}
-        src={props.data?.photos?.large || "/img/ava-blue.jpg"}
+        src={props.data.photos?.large || "img/ava-blue.jpg"}
         alt="avatar"
       />
+      {isOwner && <input type="file" onChange={onAvatarUpload} />}
       <div className={s.text}>Имя: {props.data.fullName}</div>
       <div className={s.text}>О себе: {props.data.aboutMe}</div>
       <div className={s.text}>{contactsItems}</div>

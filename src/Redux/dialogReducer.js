@@ -4,9 +4,9 @@ const POST_MESSAGE = "my-react/dialog/postMessage";
 
 const initialState = {
   dialogs: [
-    { id: 1, name: "Маяковский", avatarPath: "/img/1.jpg" },
-    { id: 2, name: "Пушкин", avatarPath: "/img/2.jpg" },
-    { id: 3, name: "Есенин", avatarPath: "/img/3.jpg" },
+    { id: 1, name: "Маяковский", avatarPath: "img/1.jpg" },
+    { id: 2, name: "Пушкин", avatarPath: "img/2.jpg" },
+    { id: 3, name: "Есенин", avatarPath: "img/3.jpg" },
   ],
   messages: {
     userId1: [

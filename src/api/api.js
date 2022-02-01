@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   withCredentials: true,
-  headers: { "API-KEY": "2347c37c-5c55-40d1-89f1-48177d8cbf03" },
+  headers: { "API-KEY": "fe13a1cc-d612-458c-8548-db77dcbaa68a" },
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
 });
 
@@ -41,5 +41,13 @@ export const profileAPI = {
   },
   updateStatus(statusText) {
     return axiosInstance.put(`/profile/status/`, { status: `${statusText}` });
+  },
+  updateAvatar(avatar) {
+    const formData = new FormData();
+    formData.append("image", avatar);
+    console.log("formData: ", formData);
+    return axiosInstance.put(`/profile/photo`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   },
 };

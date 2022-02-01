@@ -13,6 +13,8 @@ export default function Profile({
   posts,
   updateStatusOnServer,
   statusText,
+  authorizedUserId,
+  updateAvatar,
 }) {
   return (
     <section className={s.content}>
@@ -20,7 +22,11 @@ export default function Profile({
         updateStatusOnServer={updateStatusOnServer}
         statusText={statusText}
       />
-      <UserInfo data={profileData} />
+      <UserInfo
+        data={profileData}
+        authorizedUserId={authorizedUserId}
+        updateAvatar={updateAvatar}
+      />
       <NewPostReduxForm onSubmit={onSubmit} />
       <MyPosts posts={posts} />
     </section>

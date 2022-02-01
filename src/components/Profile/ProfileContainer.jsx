@@ -7,6 +7,7 @@ import {
   setProfileThunkCreator,
   getStatusFromServer,
   updateStatusOnServer,
+  updateAvatar,
 } from "../../redux/profileReducer.js";
 import Profile from "./Profile";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
@@ -21,14 +22,30 @@ import {
 } from "../../redux/authSelectors.js";
 
 class ProfileContainer extends React.Component {
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.match.params.userId || this.props.authorizedUserId;
     this.props.getStatusFromServer(userId); // в стор пишем полученное с сервера значение статуса
     this.props.setProfileThunkCreator(userId);
   }
+
+  componentDidMount() {
+    this.refreshProfile();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.userId !== this.props.match.params.userId) {
+      this.refreshProfile();
+    }
+  }
+
   onSubmit(message, dispatch) {
     dispatch(addPost(message.newMessage));
   }
+
+  updateAvatar(avatar, dispatch) {
+    dispatch(updateAvatar(avatar));
+  }
+
   render() {
     return (
       <Profile
@@ -37,6 +54,8 @@ class ProfileContainer extends React.Component {
         statusText={this.props.statusText}
         profileData={this.props.profileData}
         posts={this.props.posts}
+        authorizedUserId={this.props.authorizedUserId}
+        updateAvatar={this.props.updateAvatar}
       />
     );
   }
@@ -58,6 +77,7 @@ export default compose(
     setProfileThunkCreator,
     getStatusFromServer,
     updateStatusOnServer,
+    updateAvatar,
   }),
   withRouter,
   withAuthRedirect

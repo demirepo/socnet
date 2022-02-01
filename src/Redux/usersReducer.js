@@ -38,7 +38,7 @@ export default function usersReducer(state = initialState, action) {
         id: user.id,
         name: user.name,
         followed: user.followed,
-        avatar: user.photos.large || "/img/ava.jpg",
+        avatar: user.photos.large || "img/ava.jpg",
         status: user.status,
       }));
 

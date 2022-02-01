@@ -13,10 +13,10 @@ export default function Header() {
 
   return (
     <header className={s.header}>
-      <img src="/img/logo.png" alt="logo"></img>
+      <img src="img/logo.png" alt="logo"></img>
       {isAuthed ? (
         <div className={s.login}>
-          <img className={s.miniavatar} src="/img/ava-blue.jpg" alt="ava" />
+          <img className={s.miniavatar} src="img/ava-blue.jpg" alt="ava" />
           {login}
           <button className={s.button} onClick={logout}>
             Logout

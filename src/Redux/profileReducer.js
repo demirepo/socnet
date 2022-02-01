@@ -3,6 +3,7 @@ import { usersAPI, profileAPI } from "../api/api";
 const ADD_POST = "my-react/profile/addPost";
 const SET_PROFILE_DATA = "my-react/profile/setProfileData";
 const SET_STATUS = "my-react/profile/setStatus";
+const SET_AVATAR = "my-react/profile/setAvatar";
 
 //===================== INITIAL STATE ============================
 
@@ -37,6 +38,12 @@ export default function profileReducer(state = initialState, action) {
     case SET_STATUS:
       return { ...state, statusText: action.statusText };
 
+    case SET_AVATAR:
+      return {
+        ...state,
+        profileData: { ...state.profileData, photos: action.photos },
+      };
+
     default:
       return state;
   }
@@ -56,6 +63,10 @@ export function setStatus(statusText) {
   return { type: SET_STATUS, statusText };
 }
 
+export function setAvatar(photos) {
+  return { type: SET_AVATAR, photos };
+}
+
 export function setProfileThunkCreator(userId) {
   return async (dispatch) => {
     let response = await usersAPI.getProfile(userId);
@@ -73,9 +84,18 @@ export function getStatusFromServer(userId) {
 export function updateStatusOnServer(statusText) {
   return async (dispatch) => {
     let response = await profileAPI.updateStatus(statusText);
-    console.log(response);
     response.data.resultCode === 0
       ? dispatch(setStatus(statusText))
       : console.log("Error during status update");
+  };
+}
+
+export function updateAvatar(avatar) {
+  return async (dispatch) => {
+    let response = await profileAPI.updateAvatar(avatar);
+    console.log(response);
+    response.data.resultCode === 0
+      ? dispatch(setAvatar(response.data.data.photos))
+      : console.log("Error during avatar update");
   };
 }
