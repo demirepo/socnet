@@ -1,4 +1,3 @@
-import React from "react";
 import s from "./FormControls.module.css";
 
 const Textarea = (props) => {

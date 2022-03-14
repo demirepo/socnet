@@ -3,13 +3,23 @@ import { useEffect } from "react";
 import { useState } from "react";
 import s from "./Users.module.css";
 
-export default function Paginator({
-  totalUsersCount,
-  currentPage,
-  setCurrentPage,
-  pageSize,
-  setPageSize,
-}) {
+type PropsType = {
+  totalUsersCount: number;
+  currentPage: number | string;
+  pageSize: number;
+  setCurrentPage: (currentPage: number) => void;
+  setPageSize: (currentPage: number, pageSize: number) => void;
+};
+
+const Paginator: React.FC<PropsType> = (props) => {
+  const {
+    totalUsersCount,
+    currentPage,
+    setCurrentPage,
+    pageSize,
+    setPageSize,
+  } = props;
+
   let [currentPageInput, setCurrentPageInput] = useState(currentPage);
   let [currentPortion, setCurrentPortion] = useState(0);
   const portionSize = 10;
@@ -29,9 +39,9 @@ export default function Paginator({
     setCurrentPageInput(currentPage);
   }, [currentPage]);
 
-  const handleInput = (e) => {
-    let value = e.target.value;
-    if (isNaN(value)) return;
+  const handleInput = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    let value = (e.target as HTMLInputElement).value;
+    if (isNaN(+value)) return;
     if (value === "") {
       setCurrentPageInput("");
     } else {
@@ -39,9 +49,9 @@ export default function Paginator({
     }
   };
 
-  const onEnter = (e) => {
+  const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code === "Enter") {
-      let value = parseInt(e.target.value);
+      let value = parseInt((e.target as HTMLInputElement).value);
       if (value) {
         if (value < 1) {
           value = 1;
@@ -77,8 +87,8 @@ export default function Paginator({
           i === currentPage ? s.pageNumber + " " + s.active : s.pageNumber
         }
         key={i}
-        onClick={(e) => {
-          setCurrentPage(e.target.innerText);
+        onClick={(e: React.MouseEvent<HTMLInputElement>) => {
+          setCurrentPage(+(e.target as HTMLInputElement).innerText);
         }}
       >
         {i}
@@ -93,7 +103,9 @@ export default function Paginator({
           Результатов на странице:&nbsp;
           <select
             value={pageSize}
-            onChange={(e) => setPageSize(currentPage, e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setPageSize(+currentPage, +e.target.value)
+            }
           >
             <option value="100">100</option>
             <option value="50">50</option>
@@ -116,4 +128,6 @@ export default function Paginator({
       </div>
     </>
   );
-}
+};
+
+export default Paginator;

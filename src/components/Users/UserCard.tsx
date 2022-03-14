@@ -2,14 +2,21 @@ import s from "./Users.module.css";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import FollowButton from "./FollowButton";
+import { UserType } from "../../redux/usersReducer";
 
-export default function UserCard({
+type PropsType = {
+  user: UserType;
+  disabledFollowButtonList: Array<number>;
+  toggleFollow: (userId: number) => void;
+};
+
+const UserCard: React.FC<PropsType> = ({
   user,
   toggleFollow,
   disabledFollowButtonList,
-}) {
+}) => {
   return (
-    <div>
+    <>
       <div className={s.usersItem}>
         <div className={s.avatar}>
           <NavLink to={`/profile/${user.id}`}>
@@ -27,6 +34,8 @@ export default function UserCard({
           />
         </div>
       </div>
-    </div>
+    </>
   );
-}
+};
+
+export default UserCard;

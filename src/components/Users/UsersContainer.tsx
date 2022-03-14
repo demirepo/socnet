@@ -3,11 +3,12 @@ import {
   setUsers,
   toggleFollow,
   setCurrentPage,
-  setIsFetching,
-  toggleDisableFollowButton,
+  setUsersAreFetching,
+  toggleFollowButton,
   getUsersThunkCreator,
   toggleFollowThunkCreator,
-  setPageSize,
+  setPageSizeAC,
+  UserType,
 } from "../../redux/usersReducer";
 import React from "react";
 import Users from "./Users";
@@ -20,8 +21,23 @@ import {
   getdisabledFollowButtonList,
   getPageSize,
 } from "../../redux/userSelectors";
+import { RootState } from "../../redux/redux-store";
 
-class UsersContainer extends React.Component {
+type PropTypes = {
+  currentPage: number;
+  pageSize: number;
+  users: Array<UserType>;
+  totalUsersCount: number;
+  isFetching: boolean;
+  disabledFollowButtonList: Array<number>;
+  setCurrentPage: (currentPage: number) => void;
+  setPageSize: (currentPage: number, pageSize: string) => void;
+  toggleFollow: (userId: number) => void;
+  getUsersThunkCreator: (currentPage: number, pageSize: number) => void;
+  toggleFollowThunkCreator: (userId: number) => void;
+};
+
+class UsersContainer extends React.Component<PropTypes> {
   componentDidMount() {
     this.props.getUsersThunkCreator(
       this.props.currentPage,
@@ -29,16 +45,16 @@ class UsersContainer extends React.Component {
     );
   }
 
-  setPageSize = (currentPage, pageSize) => {
-    this.props.setPageSize(pageSize);
+  setPageSize = (currentPage: number, pageSize: number) => {
+    setPageSizeAC(pageSize);
     this.props.getUsersThunkCreator(currentPage, pageSize);
   };
 
-  toggleFollow = (userId) => {
+  toggleFollow = (userId: number) => {
     this.props.toggleFollowThunkCreator(userId);
   };
 
-  setCurrentPage = (currentPage) => {
+  setCurrentPage = (currentPage: number) => {
     this.props.setCurrentPage(currentPage);
     this.props.getUsersThunkCreator(currentPage, this.props.pageSize);
   };
@@ -50,7 +66,6 @@ class UsersContainer extends React.Component {
         pageSize={this.props.pageSize}
         totalUsersCount={this.props.totalUsersCount}
         currentPage={this.props.currentPage}
-        pagesCount={this.props.pagesCount}
         isFetching={this.props.isFetching}
         disabledFollowButtonList={this.props.disabledFollowButtonList}
         setPageSize={this.setPageSize}
@@ -61,7 +76,7 @@ class UsersContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
   return {
     pageSize: getPageSize(state),
     users: getUsers(state),
@@ -75,11 +90,11 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   setUsers,
-  setPageSize,
+  setPageSizeAC,
   toggleFollow,
   setCurrentPage,
-  setIsFetching,
-  toggleDisableFollowButton,
+  setUsersAreFetching,
+  toggleDisableFollowButton: toggleFollowButton,
   getUsersThunkCreator,
   toggleFollowThunkCreator,
 })(UsersContainer);

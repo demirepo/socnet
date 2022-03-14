@@ -5,14 +5,21 @@ import DialogItem from "./DialogItem/DialogItem";
 import Messages from "./Messages/Messages";
 import validator from "../../utils/validation";
 import { Textarea } from "../common/FormControls/FormControls";
+import { Dialog, Message } from "../../redux/dialogReducer";
 
-export default function Dialogs({ dialogs, messages, onSubmit }) {
+type PropsType = {
+  dialogs: Array<Dialog>;
+  messages: Array<Message>;
+  onSubmit: (e: any) => void;
+};
+
+const Dialogs: React.FC<PropsType> = ({ dialogs, messages, onSubmit }) => {
   const dialogItemsList = dialogs.map((d) => (
     <DialogItem key={d.id} id={d.id} name={d.name} path={d.avatarPath} />
   ));
 
-  const messageList = messages.userId1.map((m) => {
-    const sideClass = m.author === "me" ? "flexLeft" : "flexRight";
+  const messageList = messages.map((m) => {
+    const sideClass = m.authorId === 0 ? "flexLeft" : "flexRight";
     return <Messages key={m.id} side={sideClass} text={m.text} />;
   });
 
@@ -25,12 +32,12 @@ export default function Dialogs({ dialogs, messages, onSubmit }) {
       <DialogInputReduxForm onSubmit={onSubmit} />
     </>
   );
-}
+};
 
 const max10 = validator.maxLength(10);
-const DialogInput = (props) => {
+const DialogInput: React.FC<any> = ({ handleSubmit }) => {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Field
         component={Textarea}
         placeholder="Input message text..."
@@ -45,3 +52,5 @@ const DialogInput = (props) => {
 };
 
 let DialogInputReduxForm = reduxForm({ form: "dialogInput" })(DialogInput);
+
+export default Dialogs;

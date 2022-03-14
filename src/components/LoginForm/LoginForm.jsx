@@ -29,6 +29,13 @@ function LoginForm({ handleSubmit }) {
       <div>
         <button type="submit">Войти</button>
       </div>
+      <br />
+      <Field
+        placeholder={"captcha text"}
+        name={"captcha"}
+        component={Input}
+        type={"text"}
+      />
     </form>
   );
 }

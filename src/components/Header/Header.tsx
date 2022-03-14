@@ -4,11 +4,12 @@ import s from "./Header.module.css";
 import { logoutThunk } from "../../redux/authReducer";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { RootState } from "../../redux/redux-store";
 
 export default function Header() {
   const dispatch = useDispatch();
-  const isAuthed = useSelector((state) => state.auth.isAuthorized);
-  const login = useSelector((state) => state.auth.login);
+  const isAuthed = useSelector((state: RootState) => state.auth.isAuthorized);
+  const login = useSelector((state: RootState) => state.auth.login);
   const logout = () => dispatch(logoutThunk());
 
   return (

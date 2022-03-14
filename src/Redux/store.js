@@ -1,3 +1,5 @@
+/// <reference path="./store.d.ts" />
+// @ts-check
 import profileReducer from "./profileReducer";
 import dialogReducer from "./dialogReducer";
 
@@ -18,34 +20,34 @@ const store = {
         { id: 2, name: "Пушкин", avatarPath: "img/2.jpg" },
         { id: 3, name: "Есенин", avatarPath: "img/3.jpg" },
       ],
-      messages: {
-        userId1: [
-          {
-            id: 1,
-            author: "me",
-            time: 1000,
-            text: "Выбегу, в улицу тело брошу я",
-          },
-          {
-            id: 2,
-            author: "opponent",
-            time: 1001,
-            text: "Дикий, обезумлюсь, отчаянием иссечась",
-          },
-          {
-            id: 3,
-            author: "me",
-            time: 1002,
-            text: "Не надо этого, дорогая, хорошая!",
-          },
-          {
-            id: 4,
-            author: "opponent",
-            time: 1003,
-            text: "Дай простимся сейчас!",
-          },
-        ],
-      },
+      // messages: {
+      //   userId1: [
+      //     {
+      //       id: 1,
+      //       author: "me",
+      //       time: 1000,
+      //       text: "Выбегу, в улицу тело брошу я",
+      //     },
+      //     {
+      //       id: 2,
+      //       author: "opponent",
+      //       time: 1001,
+      //       text: "Дикий, обезумлюсь, отчаянием иссечась",
+      //     },
+      //     {
+      //       id: 3,
+      //       author: "me",
+      //       time: 1002,
+      //       text: "Не надо этого, дорогая, хорошая!",
+      //     },
+      //     {
+      //       id: 4,
+      //       author: "opponent",
+      //       time: 1003,
+      //       text: "Дай простимся сейчас!",
+      //     },
+      //   ],
+      // },
       dialogInputText: "",
     },
   },
@@ -57,16 +59,20 @@ const store = {
   getState() {
     return this._state;
   },
-
+  //@ts-ignore
   subscribe(observer) {
     this._callSubscriber = observer; // substituting mock function by callback
   },
 
   //===================== REDUCERS ============================
 
+  //@ts-ignore
   dispatch(action) {
+    //@ts-ignore
     this._state.profilePage = profileReducer(this._state.profilePage, action);
+    //@ts-ignore
     this._state.messagesPage = dialogReducer(this._state.messagesPage, action);
+    //@ts-ignore
     this._callSubscriber(this._state); // calling renderAll function
   },
 };

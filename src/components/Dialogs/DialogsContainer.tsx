@@ -1,15 +1,15 @@
-import { postMessage } from "../../redux/dialogReducer";
-import Dialogs from "./Dialogs";
-import { change } from "redux-form";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { change } from "redux-form";
+import { postMessage } from "../../redux/dialogReducer";
+import { useAppSelector } from "../../redux/redux-store";
+import Dialogs from "./Dialogs";
 
 const DialogsContainer = () => {
   const dispatch = useDispatch();
-  const dialogs = useSelector((state) => state.messagesPage.dialogs);
-  const messages = useSelector((state) => state.messagesPage.messages);
+  const dialogs = useAppSelector((state) => state.messagesPage.dialogs);
+  const messages = useAppSelector((state) => state.messagesPage.messages);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: any) => {
     dispatch(postMessage(e.dialogInput));
     dispatch(change("dialogInput", "dialogInput", ""));
   };

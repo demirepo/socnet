@@ -8,7 +8,7 @@ import {
   getStatusFromServer,
   updateStatusOnServer,
   updateAvatar,
-} from "../../redux/profileReducer.js";
+} from "../../redux/profileReducer";
 import Profile from "./Profile";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import {
@@ -42,20 +42,20 @@ class ProfileContainer extends React.Component {
     dispatch(addPost(message.newMessage));
   }
 
-  updateAvatar(avatar, dispatch) {
-    dispatch(updateAvatar(avatar));
+  updateAvatarHandler(file) {
+    updateAvatar(file);
   }
 
   render() {
     return (
       <Profile
         onSubmit={this.onSubmit}
-        updateStatusOnServer={updateStatusOnServer}
+        updateAvatarHandler={this.updateAvatarHandler}
+        updateStatusOnServer={this.props.updateStatusOnServer}
         statusText={this.props.statusText}
         profileData={this.props.profileData}
         posts={this.props.posts}
         authorizedUserId={this.props.authorizedUserId}
-        updateAvatar={this.props.updateAvatar}
       />
     );
   }
@@ -71,14 +71,29 @@ const mapStateToProps = (state) => {
   };
 };
 
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     addPost: (text) => dispatch(addPost(text)),
+//     setProfileThunkCreator: (userId) =>
+//       dispatch(setProfileThunkCreator(userId)),
+//     getStatusFromServer: (userId) => dispatch(getStatusFromServer(userId)),
+//     updateStatusOnServer: (text) => dispatch(updateStatusOnServer(text)),
+//     updateAvatar: (file) => dispatch(updateAvatar(file)),
+//   };
+// };
+
 export default compose(
-  connect(mapStateToProps, {
-    addPost,
-    setProfileThunkCreator,
-    getStatusFromServer,
-    updateStatusOnServer,
-    updateAvatar,
-  }),
+  connect(
+    mapStateToProps,
+    // mapDispatchToProps
+    {
+      addPost,
+      setProfileThunkCreator,
+      getStatusFromServer,
+      updateStatusOnServer,
+      updateAvatar,
+    }
+  ),
   withRouter,
   withAuthRedirect
 )(ProfileContainer);

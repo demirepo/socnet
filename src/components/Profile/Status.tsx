@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import s from "./Profile.module.css";
 
-export default function Status({
-  updateStatusOnServer,
-  statusText: propsStatusText,
-}) {
+type StatusProps = {
+  updateStatusOnServer: (status: string) => void;
+  statusText: string;
+};
+
+const Status: React.FC<StatusProps> = (props) => {
+  const { updateStatusOnServer, statusText: propsStatusText } = props;
   const [showInput, setShowInput] = useState(false);
   const [statusText, setStatusText] = useState(propsStatusText);
 
@@ -18,11 +21,11 @@ export default function Status({
     updateStatusOnServer(statusText);
   };
 
-  const onInputChange = (e) => {
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStatusText(e.target.value);
   };
 
-  const onEnter = (e) => {
+  const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.key === "Enter" && hideStatusInput();
   };
 
@@ -43,4 +46,6 @@ export default function Status({
       )}
     </div>
   );
-}
+};
+
+export default Status;

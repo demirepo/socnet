@@ -1,8 +1,21 @@
+import { UserType } from "../../redux/usersReducer";
 import Spinner from "../common/Spinner/Spinner";
 import Paginator from "./Paginator";
 import UserCard from "./UserCard";
 
-export default function Users({
+type PropTypes = {
+  users: Array<UserType>;
+  disabledFollowButtonList: Array<number>;
+  totalUsersCount: number;
+  pageSize: number;
+  currentPage: number;
+  isFetching: boolean;
+  setCurrentPage: (currentPage: number) => void;
+  setPageSize: (currentPage: number, pageSize: number) => void;
+  toggleFollow: (userId: number) => void;
+};
+
+const Users: React.FC<PropTypes> = ({
   users,
   toggleFollow,
   disabledFollowButtonList,
@@ -12,7 +25,7 @@ export default function Users({
   setCurrentPage,
   setPageSize,
   isFetching,
-}) {
+}) => {
   return (
     <div>
       {isFetching && <Spinner />}
@@ -33,4 +46,5 @@ export default function Users({
       ))}
     </div>
   );
-}
+};
+export default Users;

@@ -2,7 +2,11 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import s from "./NewPost.module.css";
 
-function NewPost({ handleSubmit }) {
+type PropsType = {
+  handleSubmit: any;
+};
+
+const NewPost: React.FC<PropsType> = ({ handleSubmit }) => {
   return (
     <div className={s.newPost}>
       <form onSubmit={handleSubmit}>
@@ -24,7 +28,7 @@ function NewPost({ handleSubmit }) {
       </form>
     </div>
   );
-}
+};
 
 const NewPostReduxForm = reduxForm({ form: "newPost" })(NewPost);
 export default NewPostReduxForm;

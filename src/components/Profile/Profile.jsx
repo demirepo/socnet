@@ -1,5 +1,3 @@
-import React from "react";
-
 import MyPosts from "./MyPosts/MyPosts";
 import UserInfo from "./UserInfo/UserInfo";
 import NewPostReduxForm from "./NewPost/NewPost";
@@ -14,7 +12,7 @@ export default function Profile({
   updateStatusOnServer,
   statusText,
   authorizedUserId,
-  updateAvatar,
+  updateAvatarHandler,
 }) {
   return (
     <section className={s.content}>
@@ -25,7 +23,7 @@ export default function Profile({
       <UserInfo
         data={profileData}
         authorizedUserId={authorizedUserId}
-        updateAvatar={updateAvatar}
+        updateAvatarHandler={updateAvatarHandler}
       />
       <NewPostReduxForm onSubmit={onSubmit} />
       <MyPosts posts={posts} />
